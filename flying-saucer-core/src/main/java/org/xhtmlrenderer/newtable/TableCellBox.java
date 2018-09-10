@@ -614,28 +614,6 @@ public class TableCellBox extends BlockBox {
             CollapsedBorderValue.borderTop(getStyle().getBorder(c), BCELL);
 
 
-        String content = getParent().getStyle().getStringProperty(CSSName.CONTENT).replaceAll("[^a-zA-Z\\-]+", "");
-
-        if("collapse-border-previous-row".equalsIgnoreCase(content)) {
-            TableCellBox prevCell = getTable().cellAbove(this);
-
-            // (4) The previous row's bottom border.
-            if (prevCell != null) {
-                TableRowBox prevRow = null;
-                if (prevCell.getSection() == getSection()) {
-                    prevRow = (TableRowBox) getParent().getPreviousSibling();
-                } else {
-                    prevRow = prevCell.getSection().getLastRow();
-                }
-
-                String prevRowContent = prevRow == null ? null : prevRow.getStyle().getStringProperty(CSSName.CONTENT).replaceAll("[^a-zA-Z\\-]+", "");
-                if (prevRow != null && "collapse-border-next-row".equalsIgnoreCase(prevRowContent)) {
-                    return CollapsedBorderValue.borderBottom(prevRow.getStyle().getBorder(c), BROW);
-                }
-            }
-        }
-
-
         TableCellBox prevCell = getTable().cellAbove(this);
         if (prevCell != null) {
             // (2) A previous cell's bottom border.

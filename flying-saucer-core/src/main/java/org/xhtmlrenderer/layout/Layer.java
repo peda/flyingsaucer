@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.xhtmlrenderer.css.constants.CSSName;
 import org.xhtmlrenderer.css.constants.PageElementPosition;
@@ -38,7 +39,10 @@ import org.xhtmlrenderer.css.newmatch.PageInfo;
 import org.xhtmlrenderer.css.style.CalculatedStyle;
 import org.xhtmlrenderer.css.style.CssContext;
 import org.xhtmlrenderer.css.style.EmptyStyle;
+import org.xhtmlrenderer.newtable.TableBox;
 import org.xhtmlrenderer.newtable.TableCellBox;
+import org.xhtmlrenderer.newtable.TableRowBox;
+import org.xhtmlrenderer.newtable.TableSectionBox;
 import org.xhtmlrenderer.render.BlockBox;
 import org.xhtmlrenderer.render.Box;
 import org.xhtmlrenderer.render.BoxDimensions;
@@ -411,13 +415,33 @@ public class Layer {
     private Map collectCollapsedTableBorders(RenderingContext c, List blocks) {
         Map cellBordersByTable = new HashMap();
         Map triggerCellsByTable = new HashMap();
-        
+
         Set all = new HashSet();
         for (Iterator i = blocks.iterator(); i.hasNext(); ) {
             Box b = (Box)i.next();
             if (b instanceof TableCellBox) {
                 TableCellBox cell = (TableCellBox)b;
-                if (cell.hasCollapsedPaintingBorder()) {
+
+                boolean paintBorder = true;
+                if("1".equalsIgnoreCase(cell.getElement().getAttribute("data-hide-last"))) {
+                    paintBorder = false;
+
+                    int idx = blocks.indexOf(cell);
+
+                    if(blocks.size() > (idx+1)) {
+                        Box nextBox = (Box) blocks.get(idx+1);
+
+                        // not including nextBox instanceof TableBox because this would mean a new table starts
+                        if(nextBox instanceof TableCellBox || nextBox instanceof TableRowBox || nextBox instanceof TableSectionBox) {
+                            paintBorder = true;
+                        }
+                    }
+                    else {
+                        paintBorder = true;
+                    }
+                }
+
+                if (paintBorder && cell.hasCollapsedPaintingBorder()) {
                     List borders = (List)cellBordersByTable.get(cell.getTable());
                     if (borders == null) {
                         borders = new ArrayList();

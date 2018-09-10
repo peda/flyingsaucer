@@ -29,6 +29,10 @@ import java.io.*;
 
 public class PDFRender {
     public static void main(String[] args) throws IOException, DocumentException {
+        args = new String[] {
+                "/home/prainer/dev/invoice.html",
+                "/home/prainer/dev/invoice.pdf"
+        };
         if (args.length != 2) {
             System.err.println("Usage: ... [url] [pdf]");
             System.exit(1);
