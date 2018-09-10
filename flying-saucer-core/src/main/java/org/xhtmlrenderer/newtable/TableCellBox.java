@@ -628,7 +628,8 @@ public class TableCellBox extends BlockBox {
                     prevRow = prevCell.getSection().getLastRow();
                 }
 
-                if (prevRow != null) {
+                String prevRowContent = prevRow == null ? null : prevRow.getStyle().getStringProperty(CSSName.CONTENT).replaceAll("[^a-zA-Z\\-]+", "");
+                if (prevRow != null && "collapse-border-next-row".equalsIgnoreCase(prevRowContent)) {
                     return CollapsedBorderValue.borderBottom(prevRow.getStyle().getBorder(c), BROW);
                 }
             }
