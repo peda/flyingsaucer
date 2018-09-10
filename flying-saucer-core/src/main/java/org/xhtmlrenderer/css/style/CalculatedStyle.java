@@ -1116,7 +1116,7 @@ public class CalculatedStyle {
     }
 
     public boolean isCollapseBorders() {
-        return isIdent(CSSName.BORDER_COLLAPSE, IdentValue.COLLAPSE) && ! isPaginateTable();
+        return isIdent(CSSName.BORDER_COLLAPSE, IdentValue.COLLAPSE) && (!isPaginateTable() || isPaginateCollapseTable());
     }
 
     public int getBorderHSpacing(CssContext c) {
@@ -1223,7 +1223,11 @@ public class CalculatedStyle {
     }
 
     public boolean isPaginateTable() {
-        return isIdent(CSSName.FS_TABLE_PAGINATE, IdentValue.PAGINATE);
+        return isIdent(CSSName.FS_TABLE_PAGINATE, IdentValue.PAGINATE) || isIdent(CSSName.FS_TABLE_PAGINATE, IdentValue.PAGINATE_COLLAPSE);
+    }
+
+    public boolean isPaginateCollapseTable() {
+        return isIdent(CSSName.FS_TABLE_PAGINATE, IdentValue.PAGINATE_COLLAPSE);
     }
 
     public boolean isTextJustify() {

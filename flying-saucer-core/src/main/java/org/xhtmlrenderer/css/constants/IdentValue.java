@@ -150,6 +150,7 @@ public class IdentValue implements FSDerivedValue {
     public final static IdentValue OUTSIDE = addValue("outside");
     public final static IdentValue OVERLINE = addValue("overline");
     public final static IdentValue PAGINATE = addValue("paginate");
+    public final static IdentValue PAGINATE_COLLAPSE = addValue("paginate-collapse");
     public final static IdentValue POINTER = addValue("pointer");
     public final static IdentValue PORTRAIT = addValue("portrait");
     public final static IdentValue PRE = addValue("pre");

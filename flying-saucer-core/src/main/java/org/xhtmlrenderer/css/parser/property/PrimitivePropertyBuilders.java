@@ -1105,7 +1105,7 @@ public class PrimitivePropertyBuilders {
 
     public static class FSTablePaginate extends SingleIdent {
         private static final BitSet ALLOWED = setFor(
-                new IdentValue[] { IdentValue.PAGINATE, IdentValue.AUTO });
+                new IdentValue[] { IdentValue.PAGINATE_COLLAPSE, IdentValue.PAGINATE, IdentValue.AUTO });
 
         protected BitSet getAllowed() {
             return ALLOWED;
