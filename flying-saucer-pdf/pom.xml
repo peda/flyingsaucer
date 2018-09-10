@@ -9,6 +9,7 @@
     <version>9.1.15</version>
   </parent>
 
+  <groupId>at.peterrainer</groupId>
   <artifactId>flying-saucer-pdf</artifactId>
 
   <packaging>jar</packaging>
