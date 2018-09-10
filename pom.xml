@@ -4,7 +4,7 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.xhtmlrenderer</groupId>
+  <groupId>at.peterrainer</groupId>
   <artifactId>flying-saucer-parent</artifactId>
   <version>9.1.15</version>
 
