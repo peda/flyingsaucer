@@ -19,12 +19,16 @@
  */
 package org.xhtmlrenderer.newtable;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.xhtmlrenderer.css.style.CalculatedStyle;
+import org.xhtmlrenderer.css.style.derived.BorderPropertySet;
 import org.xhtmlrenderer.layout.LayoutContext;
 import org.xhtmlrenderer.render.BlockBox;
+import org.xhtmlrenderer.render.Box;
 import org.xhtmlrenderer.render.RenderingContext;
 
 public class TableSectionBox extends BlockBox {
@@ -181,6 +185,7 @@ public class TableSectionBox extends BlockBox {
         
         cell.setRow(cRow);
         cell.setCol(getTable().effColToCol(col));
+        row.setRow(cRow);
     }
     
     public void reset(LayoutContext c) {
@@ -232,13 +237,62 @@ public class TableSectionBox extends BlockBox {
     protected boolean isSkipWhenCollapsingMargins() {
         return true;
     }
-    
-    public void paintBorder(RenderingContext c) {
-        // row groups never have borders
+
+    private boolean isPaintBackgroundsAndBorders() {
+        if(getStyle().getBackgroundColor() == null) return false;
+
+        boolean showEmpty = getStyle().isShowEmptyCells();
+        // XXX Not quite right, but good enough for now
+        // (e.g. absolute boxes will be counted as content here when the spec
+        // says the cell should be treated as empty).
+        return showEmpty || getChildrenContentType() != BlockBox.CONTENT_EMPTY;
+
     }
-    
+
     public void paintBackground(RenderingContext c) {
-        // painted at the cell level
+        if (isPaintBackgroundsAndBorders() && getStyle().isVisible()) {
+            Rectangle bounds;
+//            if (c.isPrint() && getTable().getStyle().isPaginateTable() && !getTable().getStyle().isPaginateCollapseTable()) {
+//                bounds = getContentLimitedBorderEdge(c);
+//            } else {
+//                bounds = getPaintingBorderEdge(c);
+//            }
+            bounds = getPaintingBorderEdge(c);
+
+            if (bounds != null) {
+                paintBackgroundStack(c, bounds);
+            }
+        }
+    }
+
+    private void paintBackgroundStack(RenderingContext c, Rectangle bounds) {
+        Rectangle imageContainer;
+
+        BorderPropertySet border = getStyle().getBorder(c);
+
+        Box row = getParent();
+        Box section = row.getParent();
+
+        CalculatedStyle tableStyle = getTable().getStyle();
+
+        CalculatedStyle sectionStyle = section.getStyle();
+
+        imageContainer = section.getPaintingBorderEdge(c);
+        imageContainer.y += tableStyle.getBorderVSpacing(c);
+        imageContainer.height -= tableStyle.getBorderVSpacing(c);
+        imageContainer.x += tableStyle.getBorderHSpacing(c);
+        imageContainer.width -= 2*tableStyle.getBorderHSpacing(c);
+
+        c.getOutputDevice().paintBackground(c, sectionStyle, bounds, imageContainer, sectionStyle.getBorder(c));
+
+        CalculatedStyle rowStyle = row.getStyle();
+
+        imageContainer = row.getPaintingBorderEdge(c);
+        imageContainer.x += tableStyle.getBorderHSpacing(c);
+        imageContainer.width -= 2*tableStyle.getBorderHSpacing(c);
+
+        c.getOutputDevice().paintBackground(c, rowStyle, bounds, imageContainer, rowStyle.getBorder(c));
+        c.getOutputDevice().paintBackground(c, getStyle(), bounds, getPaintingBorderEdge(c), border);
     }
     
     public TableRowBox getLastRow() {

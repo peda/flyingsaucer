@@ -250,7 +250,9 @@ public class TableCellBox extends BlockBox {
         }
     }
     
-    private boolean isPaintBackgroundsAndBorders() {
+    private boolean isPaintBackground() {
+        if(getStyle().getBackgroundColor() == null) return false;
+
         boolean showEmpty = getStyle().isShowEmptyCells();
         // XXX Not quite right, but good enough for now 
         // (e.g. absolute boxes will be counted as content here when the spec 
@@ -258,11 +260,20 @@ public class TableCellBox extends BlockBox {
         return showEmpty || getChildrenContentType() != BlockBox.CONTENT_EMPTY;
                     
     }
+
+    private boolean isPaintBorders() {
+        boolean showEmpty = getStyle().isShowEmptyCells();
+        // XXX Not quite right, but good enough for now
+        // (e.g. absolute boxes will be counted as content here when the spec
+        // says the cell should be treated as empty).
+        return showEmpty || getChildrenContentType() != BlockBox.CONTENT_EMPTY;
+
+    }
     
     public void paintBackground(RenderingContext c) {
-        if (isPaintBackgroundsAndBorders() && getStyle().isVisible()) {
+        if (isPaintBackground() && getStyle().isVisible()) {
             Rectangle bounds;
-            if (c.isPrint() && getTable().getStyle().isPaginateTable()) {
+            if (c.isPrint() && getTable().getStyle().isPaginateTable() && !getTable().getStyle().isPaginateCollapseTable()) {
                 bounds = getContentLimitedBorderEdge(c);
             } else {
                 bounds = getPaintingBorderEdge(c);    
@@ -312,7 +323,7 @@ public class TableCellBox extends BlockBox {
     }
     
     public void paintBorder(RenderingContext c) {
-        if (isPaintBackgroundsAndBorders() && ! hasCollapsedPaintingBorder()) {
+        if (isPaintBorders() && ! hasCollapsedPaintingBorder()) {
             // Collapsed table borders are painted separately
             if (c.isPrint() && getTable().getStyle().isPaginateTable() && getStyle().isVisible()) {
                 Rectangle bounds = getContentLimitedBorderEdge(c);

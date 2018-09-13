@@ -26,17 +26,16 @@ import java.util.Iterator;
 import java.util.List;
 import org.xhtmlrenderer.css.constants.CSSName;
 import org.xhtmlrenderer.css.constants.IdentValue;
+import org.xhtmlrenderer.css.style.CalculatedStyle;
 import org.xhtmlrenderer.css.style.CssContext;
 import org.xhtmlrenderer.css.style.derived.BorderPropertySet;
 import org.xhtmlrenderer.css.style.derived.RectPropertySet;
 import org.xhtmlrenderer.layout.LayoutContext;
-import org.xhtmlrenderer.render.BlockBox;
-import org.xhtmlrenderer.render.Box;
-import org.xhtmlrenderer.render.ContentLimitContainer;
-import org.xhtmlrenderer.render.PageBox;
-import org.xhtmlrenderer.render.RenderingContext;
+import org.xhtmlrenderer.render.*;
 
 public class TableRowBox extends BlockBox {
+    private int _row;
+
     private int _baseline;
     private boolean _haveBaseline = false;
     private int _heightOverride;
@@ -475,11 +474,111 @@ public class TableRowBox extends BlockBox {
     public void paintBorder(RenderingContext c) {
         // rows never have borders
     }
+
+    private boolean isPaintBackgroundsAndBorders() {
+        if(getStyle().getBackgroundColor() == null) return false;
+
+        boolean showEmpty = getStyle().isShowEmptyCells();
+        // XXX Not quite right, but good enough for now
+        // (e.g. absolute boxes will be counted as content here when the spec
+        // says the cell should be treated as empty).
+        return showEmpty || getChildrenContentType() != BlockBox.CONTENT_EMPTY;
+
+    }
     
     public void paintBackground(RenderingContext c) {
-        // painted at the cell level
-    }   
-    
+        if (isPaintBackgroundsAndBorders() && getStyle().isVisible()) {
+            Rectangle bounds;
+            if (c.isPrint() && getTable().getStyle().isPaginateTable() && !getTable().getStyle().isPaginateCollapseTable()) {
+                bounds = getContentLimitedBorderEdge(c);
+            } else {
+                bounds = getPaintingBorderEdge(c);
+            }
+
+            if (bounds != null) {
+                paintBackgroundStack(c, bounds);
+            }
+        }
+    }
+
+    public int getRow() {
+        return _row;
+    }
+
+    public void setRow(int row) {
+        _row = row;
+    }
+
+    private void paintBackgroundStack(RenderingContext c, Rectangle bounds) {
+        Rectangle imageContainer;
+
+        BorderPropertySet border = getStyle().getBorder(c);
+
+        Box row = getParent();
+        Box section = row.getParent();
+
+        CalculatedStyle tableStyle = getTable().getStyle();
+
+        CalculatedStyle sectionStyle = section.getStyle();
+
+        imageContainer = section.getPaintingBorderEdge(c);
+        imageContainer.y += tableStyle.getBorderVSpacing(c);
+        imageContainer.height -= tableStyle.getBorderVSpacing(c);
+        imageContainer.x += tableStyle.getBorderHSpacing(c);
+        imageContainer.width -= 2*tableStyle.getBorderHSpacing(c);
+
+        c.getOutputDevice().paintBackground(c, sectionStyle, bounds, imageContainer, sectionStyle.getBorder(c));
+
+        CalculatedStyle rowStyle = row.getStyle();
+
+        imageContainer = row.getPaintingBorderEdge(c);
+        imageContainer.x += tableStyle.getBorderHSpacing(c);
+        imageContainer.width -= 2*tableStyle.getBorderHSpacing(c);
+
+        c.getOutputDevice().paintBackground(c, rowStyle, bounds, imageContainer, rowStyle.getBorder(c));
+        c.getOutputDevice().paintBackground(c, getStyle(), bounds, getPaintingBorderEdge(c), border);
+    }
+
+    private Rectangle getContentLimitedBorderEdge(RenderingContext c) {
+        Rectangle result = getPaintingBorderEdge(c);
+
+        TableSectionBox section = getSection();
+        if (section.isHeader() || section.isFooter()) {
+            return result;
+        }
+
+        ContentLimitContainer contentLimitContainer = ((TableRowBox)getParent()).getContentLimitContainer();
+        ContentLimit limit = contentLimitContainer != null ? contentLimitContainer.getContentLimit(c.getPageNo()) : null;
+
+        if (limit == null) {
+            return null;
+        } else {
+            if (limit.getTop() == ContentLimit.UNDEFINED ||
+                    limit.getBottom() == ContentLimit.UNDEFINED) {
+                return result;
+            }
+
+            int top;
+            if (c.getPageNo() == contentLimitContainer.getInitialPageNo()) {
+                top = result.y;
+            } else {
+                top = limit.getTop() - ((TableRowBox)getParent()).getExtraSpaceTop() ;
+            }
+
+            int bottom;
+            if (c.getPageNo() == contentLimitContainer.getLastPageNo()) {
+                bottom = result.y + result.height;
+            } else {
+                bottom = limit.getBottom() + ((TableRowBox)getParent()).getExtraSpaceBottom();
+            }
+
+            result.y = top;
+            result.height = bottom - top;
+
+            return result;
+        }
+    }
+
     public void reset(LayoutContext c) {
         super.reset(c);
         setHaveBaseline(false);
