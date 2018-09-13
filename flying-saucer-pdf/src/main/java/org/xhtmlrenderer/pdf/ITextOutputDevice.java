@@ -48,6 +48,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
+import com.lowagie.text.pdf.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xhtmlrenderer.css.constants.CSSName;
@@ -78,23 +79,6 @@ import org.xhtmlrenderer.util.XRRuntimeException;
 
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Image;
-import com.lowagie.text.pdf.CMYKColor;
-import com.lowagie.text.pdf.PdfAction;
-import com.lowagie.text.pdf.PdfAnnotation;
-import com.lowagie.text.pdf.PdfArray;
-import com.lowagie.text.pdf.PdfBorderArray;
-import com.lowagie.text.pdf.PdfBorderDictionary;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfDestination;
-import com.lowagie.text.pdf.PdfDictionary;
-import com.lowagie.text.pdf.PdfImportedPage;
-import com.lowagie.text.pdf.PdfIndirectReference;
-import com.lowagie.text.pdf.PdfName;
-import com.lowagie.text.pdf.PdfOutline;
-import com.lowagie.text.pdf.PdfReader;
-import com.lowagie.text.pdf.PdfString;
-import com.lowagie.text.pdf.PdfTextArray;
-import com.lowagie.text.pdf.PdfWriter;
 
 /**
  * This class is largely based on {@link com.lowagie.text.pdf.PdfGraphics2D}.
@@ -150,6 +134,8 @@ public class ITextOutputDevice extends AbstractOutputDevice implements OutputDev
     private int _nextFormFieldIndex;
 
     private Set _linkTargetAreas;
+
+    public float _opacity = 1f;
 
     public ITextOutputDevice(float dotsPerPoint) {
         _dotsPerPoint = dotsPerPoint;
@@ -401,13 +387,25 @@ public class ITextOutputDevice extends AbstractOutputDevice implements OutputDev
         draw(bounds);
     }
 
+    public void setOpacity(float opacity) {
+        if (opacity != _opacity) {
+            PdfGState gs = new PdfGState();
+
+            gs.setBlendMode(PdfGState.BM_NORMAL);
+            gs.setFillOpacity(opacity);
+
+            _currentPage.setGState(gs);
+            _opacity = opacity;
+        }
+    }
+
     public void setColor(FSColor color) {
         if (color instanceof FSRGBColor) {
             FSRGBColor rgb = (FSRGBColor) color;
             _color = new Color(rgb.getRed(), rgb.getGreen(), rgb.getBlue());
         } else if (color instanceof FSCMYKColor) {
             FSCMYKColor cmyk = (FSCMYKColor) color;
-            _color = new CMYKColor(cmyk.getCyan(), cmyk.getMagenta(), cmyk.getYellow(), cmyk.getBlack());
+            _color = new CMYKAColor(cmyk.getCyan(), cmyk.getMagenta(), cmyk.getYellow(), cmyk.getBlack(), cmyk.getAlpha());
         } else {
             throw new RuntimeException("internal error: unsupported color class " + color.getClass().getName());
         }
@@ -582,6 +580,8 @@ public class ITextOutputDevice extends AbstractOutputDevice implements OutputDev
         if (!(_color.equals(_fillColor))) {
             _fillColor = _color;
             _currentPage.setColorFill(_fillColor);
+
+            setOpacity(_fillColor.getAlpha()/255.0f);
         }
     }
 
@@ -1330,5 +1330,23 @@ public class ITextOutputDevice extends AbstractOutputDevice implements OutputDev
         result.setHeight(box.getHeight() / _dotsPerPoint);
 
         return result;
+    }
+}
+
+
+class CMYKAColor extends CMYKColor {
+    private float _alpha = 1.0f;
+
+    public CMYKAColor(float floatCyan, float floatMagenta, float floatYellow, float floatBlack, float floatAlpha) {
+        super(floatCyan, floatMagenta, floatYellow, floatBlack);
+        this._alpha = floatAlpha;
+    }
+
+    public float get_alpha() {
+        return this._alpha;
+    }
+
+    public int getAlpha() {
+        return (int) (_alpha * 255.0f);
     }
 }

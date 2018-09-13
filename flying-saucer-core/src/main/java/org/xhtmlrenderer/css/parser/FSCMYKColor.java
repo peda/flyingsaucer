@@ -24,8 +24,13 @@ public class FSCMYKColor implements FSColor {
     private final float _magenta;
     private final float _yellow;
     private final float _black;
-    
+    private final float _alpha;
+
     public FSCMYKColor(float c, float m, float y, float k) {
+        this(c, m, y, k, 1);
+    }
+
+    public FSCMYKColor(float c, float m, float y, float k, float a) {
         if (c < 0 || c > 1) {
             throw new IllegalArgumentException();
         }
@@ -38,10 +43,14 @@ public class FSCMYKColor implements FSColor {
         if (k < 0 || k > 1) {
             throw new IllegalArgumentException();
         }
+        if (a < 0 || a > 1) {
+            throw new IllegalArgumentException();
+        }
         _cyan = c;
         _magenta = m;
         _yellow = y;
         _black = k;
+        _alpha = a;
     }
 
     public float getCyan() {
@@ -60,17 +69,21 @@ public class FSCMYKColor implements FSColor {
         return _black;
     }
 
+    public float getAlpha() {
+        return _alpha;
+    }
+
     public String toString() {
-        return "cmyk(" + _cyan + ", " + _magenta + ", " + _yellow + ", " + _black + ")";
+        return "cmyka(" + _cyan + ", " + _magenta + ", " + _yellow + ", " + _black + ", " + _alpha + ")";
     }
-    
+
     public FSColor lightenColor() {
-        return new FSCMYKColor(_cyan * 0.8f, _magenta * 0.8f, _yellow * 0.8f, _black);
+        return new FSCMYKColor(_cyan * 0.8f, _magenta * 0.8f, _yellow * 0.8f, _black, _alpha);
     }
-    
+
     public FSColor darkenColor() {
         return new FSCMYKColor(
-                Math.min(1.0f, _cyan / 0.8f), Math.min(1.0f, _magenta / 0.8f), 
-                Math.min(1.0f, _yellow / 0.8f), _black);
+                Math.min(1.0f, _cyan / 0.8f), Math.min(1.0f, _magenta / 0.8f),
+                Math.min(1.0f, _yellow / 0.8f), _black, _alpha);
     }
 }
