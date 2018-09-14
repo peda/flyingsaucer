@@ -1349,4 +1349,18 @@ class CMYKAColor extends CMYKColor {
     public int getAlpha() {
         return (int) (_alpha * 255.0f);
     }
+
+
+    public boolean equals(Object var1) {
+        if (!(var1 instanceof CMYKColor)) {
+            return false;
+        } else {
+            CMYKColor var2 = (CMYKColor)var1;
+            return super.equals(var2) && this._alpha == var2.getAlpha();
+        }
+    }
+
+    public int hashCode() {
+        return super.hashCode() ^ Float.floatToIntBits(this._alpha);
+    }
 }
