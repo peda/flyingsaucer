@@ -406,6 +406,7 @@ public class ITextOutputDevice extends AbstractOutputDevice implements OutputDev
         } else if (color instanceof FSCMYKColor) {
             FSCMYKColor cmyk = (FSCMYKColor) color;
             _color = new CMYKAColor(cmyk.getCyan(), cmyk.getMagenta(), cmyk.getYellow(), cmyk.getBlack(), cmyk.getAlpha());
+            setOpacity(cmyk.getAlpha());
         } else {
             throw new RuntimeException("internal error: unsupported color class " + color.getClass().getName());
         }
@@ -589,6 +590,8 @@ public class ITextOutputDevice extends AbstractOutputDevice implements OutputDev
         if (!(_color.equals(_strokeColor))) {
             _strokeColor = _color;
             _currentPage.setColorStroke(_strokeColor);
+
+            setOpacity(_strokeColor.getAlpha()/255.0f);
         }
     }
 
