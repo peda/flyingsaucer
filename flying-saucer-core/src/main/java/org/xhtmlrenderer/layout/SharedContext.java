@@ -434,13 +434,13 @@ public class SharedContext {
     public float getHHeight(FontContext fontContext, FontSpecification fs) {
         FSFont font = getFontResolver().resolveFont(this, fs);
         FSFontMetrics fm = getTextRenderer().getFSFontMetrics(fontContext, font, " ");
-        return fm.getCapHeight() + fm.getUnderlineThickness();
+        return fm.getCapHeight();
     }
 
     public float getHMHeight(FontContext fontContext, FontSpecification fs) {
         FSFont font = getFontResolver().resolveFont(this, fs);
         FSFontMetrics fm = getTextRenderer().getFSFontMetrics(fontContext, font, " ");
-        return (fm.getAscent() - fm.getCapHeight())/2  + fm.getUnderlineThickness()/2;
+        return (fm.getAscent() - fm.getCapHeight()) + 30;
     }
 
     /**
