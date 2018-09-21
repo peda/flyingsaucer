@@ -47,6 +47,7 @@ public class Token {
     public static final int EMS = 25;
     public static final int EXS = 26;
     public static final int EHS = 10026;
+    public static final int EHMS = 10027;
     public static final int PX = 27;
     public static final int CM = 28;
     public static final int MM = 29;
@@ -103,6 +104,7 @@ public class Token {
     public static final Token TK_EMS = new Token(EMS, "EMS", "an em value");
     public static final Token TK_EXS = new Token(EXS, "EXS", "an ex value");
     public static final Token TK_EHS = new Token(EHS, "EHS", "an eh value");
+    public static final Token TK_EHMS = new Token(EHMS, "EHMS", "an ehm value");
     public static final Token TK_PX = new Token(PX, "PX", "a pixel value");
     public static final Token TK_CM = new Token(CM, "CM", "a centimeter value");
     public static final Token TK_MM = new Token(MM, "MM", "a millimeter value");

@@ -97,6 +97,10 @@ public class RenderingContext implements CssContext {
         return sharedContext.getHHeight(getFontContext(), parentFont);
     }
 
+    public float getHMHeight(FontSpecification parentFont) {
+        return sharedContext.getHMHeight(getFontContext(), parentFont);
+    }
+
     public TextRenderer getTextRenderer() {
         return sharedContext.getTextRenderer();
     }

@@ -157,6 +157,7 @@ public abstract class AbstractPropertyBuilder implements PropertyBuilder {
         int unit = value.getPrimitiveType();
         return unit == CSSPrimitiveValueExtension.CSS_EMS || unit == CSSPrimitiveValueExtension.CSS_EXS
                 || unit == CSSPrimitiveValueExtension.CSS_EHS
+                || unit == CSSPrimitiveValueExtension.CSS_EHMS
                 || unit == CSSPrimitiveValueExtension.CSS_PX || unit == CSSPrimitiveValueExtension.CSS_IN
                 || unit == CSSPrimitiveValueExtension.CSS_CM || unit == CSSPrimitiveValueExtension.CSS_MM
                 || unit == CSSPrimitiveValueExtension.CSS_PT || unit == CSSPrimitiveValueExtension.CSS_PC

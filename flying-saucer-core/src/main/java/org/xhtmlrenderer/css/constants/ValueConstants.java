@@ -85,6 +85,8 @@ public final class ValueConstants {
             return CSSPrimitiveValueExtension.CSS_EXS;
         } else if ("eh".equals(type)) {
             return CSSPrimitiveValueExtension.CSS_EHS;
+        } else if ("ehm".equals(type)) {
+            return CSSPrimitiveValueExtension.CSS_EHMS;
         } else if ("px".equals(type)) {
             return CSSPrimitiveValueExtension.CSS_PX;
         } else if ("%".equals(type)) {
@@ -155,6 +157,7 @@ public final class ValueConstants {
             case CSSPrimitiveValueExtension.CSS_EMS:
             case CSSPrimitiveValueExtension.CSS_EXS:
             case CSSPrimitiveValueExtension.CSS_EHS:
+            case CSSPrimitiveValueExtension.CSS_EHMS:
                 // length
             case CSSPrimitiveValueExtension.CSS_IN:
             case CSSPrimitiveValueExtension.CSS_CM:
@@ -240,6 +243,7 @@ public final class ValueConstants {
             case CSSPrimitiveValueExtension.CSS_EMS:
             case CSSPrimitiveValueExtension.CSS_EXS:
             case CSSPrimitiveValueExtension.CSS_EHS:
+            case CSSPrimitiveValueExtension.CSS_EHMS:
             case CSSPrimitiveValueExtension.CSS_PERCENTAGE:
                 // relatives will be treated separately from lengths;
                 return false;
@@ -301,6 +305,7 @@ public final class ValueConstants {
         sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_EMS), "em");
         sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_EXS), "ex");
         sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_EHS), "eh");
+        sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_EHMS), "ehm");
         sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_PX), "px");
         sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_PERCENTAGE), "%");
         sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_IN), "in");

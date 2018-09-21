@@ -24,6 +24,8 @@ public interface CssContext {
 
     float getHHeight(FontSpecification parentFont);
 
+    float getHMHeight(FontSpecification parentFont);
+
     FSFont getFont(FontSpecification font);
     
     // FIXME Doesn't really belong here, but this is

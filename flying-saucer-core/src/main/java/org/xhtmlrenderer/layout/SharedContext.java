@@ -437,6 +437,12 @@ public class SharedContext {
         return fm.getCapHeight() + fm.getUnderlineThickness();
     }
 
+    public float getHMHeight(FontContext fontContext, FontSpecification fs) {
+        FSFont font = getFontResolver().resolveFont(this, fs);
+        FSFontMetrics fm = getTextRenderer().getFSFontMetrics(fontContext, font, " ");
+        return (fm.getAscent() - fm.getCapHeight())/2  + fm.getUnderlineThickness()/2;
+    }
+
     /**
      * Gets the baseURL attribute of the RenderingContext object
      *

@@ -92,6 +92,8 @@ public class FSCssValue implements org.w3c.dom.css.CSSPrimitiveValueExtension {
                 // fall-thru
             case CSSPrimitiveValueExtension.CSS_EHS:
                 // fall-thru
+            case CSSPrimitiveValueExtension.CSS_EHMS:
+                // fall-thru
             case CSSPrimitiveValueExtension.CSS_MM:
                 // fall-thru
             case CSSPrimitiveValueExtension.CSS_NUMBER:

@@ -90,6 +90,7 @@ public class LengthValue extends DerivedValue {
     public boolean isDependentOnFontSize() {
         return _lengthPrimitiveType == CSSPrimitiveValueExtension.CSS_EXS ||
                     _lengthPrimitiveType == CSSPrimitiveValueExtension.CSS_EHS ||
+                    _lengthPrimitiveType == CSSPrimitiveValueExtension.CSS_EHMS ||
                     _lengthPrimitiveType == CSSPrimitiveValueExtension.CSS_EMS;
     }
 
@@ -169,6 +170,21 @@ public class LengthValue extends DerivedValue {
                     hHeight = ctx.getHHeight(font);
                 }
                 absVal = relVal * hHeight;
+
+                break;
+            case CSSPrimitiveValueExtension.CSS_EHMS:
+                // To convert EHS to pixels, we need the height of a capital character character in the current
+                // element...
+                // to the font size of the parent element (spec: 4.3.2)
+                float hmHeight;
+                if (cssName == CSSName.FONT_SIZE) {
+                    FontSpecification parentFont = style.getParent().getFont(ctx);
+                    hmHeight = ctx.getHMHeight(parentFont);
+                } else {
+                    FontSpecification font = style.getFont(ctx);
+                    hmHeight = ctx.getHMHeight(font);
+                }
+                absVal = relVal * hmHeight;
 
                 break;
             case CSSPrimitiveValueExtension.CSS_PERCENTAGE:

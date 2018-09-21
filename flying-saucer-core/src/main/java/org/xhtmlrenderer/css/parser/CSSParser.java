@@ -1401,6 +1401,7 @@ public class CSSParser {
                 case Token.EMS:
                 case Token.EXS:
                 case Token.EHS:
+                case Token.EHMS:
                 case Token.ANGLE:
                 case Token.TIME:
                 case Token.FREQ:
@@ -1419,7 +1420,7 @@ public class CSSParser {
                     if (operator) {
                         throw new CSSParseException(t, new Token[] {
                                 Token.TK_NUMBER, Token.TK_PLUS, Token.TK_MINUS,
-                                Token.TK_PERCENTAGE, Token.TK_PX, Token.TK_EMS, Token.TK_EXS, Token.TK_EHS,
+                                Token.TK_PERCENTAGE, Token.TK_PX, Token.TK_EMS, Token.TK_EXS, Token.TK_EHS, Token.TK_EHMS,
                                 Token.TK_PC, Token.TK_MM, Token.TK_CM, Token.TK_IN, Token.TK_PT,
                                 Token.TK_ANGLE, Token.TK_TIME, Token.TK_FREQ, Token.TK_STRING,
                                 Token.TK_IDENT, Token.TK_URI, Token.TK_HASH, Token.TK_FUNCTION },
@@ -1530,6 +1531,14 @@ public class CSSParser {
                 next();
                 skip_whitespace();
                 break;
+            case Token.EHMS:
+                result = new PropertyValue(
+                        CSSPrimitiveValueExtension.CSS_EHMS,
+                        sign*Float.parseFloat(extractNumber(t)),
+                        sign(sign) + getTokenValue(t));
+                next();
+                skip_whitespace();
+                break;
             case Token.PX:
                 result = new PropertyValue(
                         CSSPrimitiveValueExtension.CSS_PX,
@@ -1612,7 +1621,7 @@ public class CSSParser {
                 break;
             default:
                 throw new CSSParseException(t, new Token[] { Token.TK_NUMBER,
-                        Token.TK_PERCENTAGE, Token.TK_PX, Token.TK_EMS, Token.TK_EXS, Token.TK_EHS,
+                        Token.TK_PERCENTAGE, Token.TK_PX, Token.TK_EMS, Token.TK_EXS, Token.TK_EHS, Token.TK_EHMS,
                         Token.TK_PC, Token.TK_MM, Token.TK_CM, Token.TK_IN, Token.TK_PT,
                         Token.TK_ANGLE, Token.TK_TIME, Token.TK_FREQ, Token.TK_STRING,
                         Token.TK_IDENT, Token.TK_URI, Token.TK_HASH, Token.TK_FUNCTION },

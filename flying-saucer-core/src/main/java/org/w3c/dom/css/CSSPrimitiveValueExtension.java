@@ -6,4 +6,5 @@ public interface CSSPrimitiveValueExtension extends CSSPrimitiveValue {
      * <code>getFloatValue</code> method.
      */
     public static final short CSS_EHS                   = 10004;
+    public static final short CSS_EHMS                  = 10005;
 }
