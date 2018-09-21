@@ -68,4 +68,6 @@ public class SWTFontMetricsAdapter implements FSFontMetrics {
         return Math.max(1, ((float) _fm.getHeight()) / 20);
     }
 
+    public float getCapHeight() { return 0f; }
+
 }

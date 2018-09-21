@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.w3c.dom.css.CSSValue;
 import org.w3c.dom.css.Counter;
 import org.w3c.dom.css.RGBColor;
@@ -31,7 +31,7 @@ import org.w3c.dom.css.Rect;
 import org.xhtmlrenderer.css.constants.IdentValue;
 import org.xhtmlrenderer.util.ArrayUtil;
 
-public class PropertyValue implements CSSPrimitiveValue {
+public class PropertyValue implements CSSPrimitiveValueExtension {
     public static final short VALUE_TYPE_NUMBER = 1;
     public static final short VALUE_TYPE_LENGTH = 2;
     public static final short VALUE_TYPE_COLOR = 3;
@@ -66,7 +66,7 @@ public class PropertyValue implements CSSPrimitiveValue {
         _cssValueType = CSSValue.CSS_PRIMITIVE_VALUE;
         _cssText = cssText;
         
-        if (type == CSSPrimitiveValue.CSS_NUMBER && floatValue != 0.0f) {
+        if (type == CSSPrimitiveValueExtension.CSS_NUMBER && floatValue != 0.0f) {
             _propertyValueType = VALUE_TYPE_NUMBER;
         } else {
             _propertyValueType = VALUE_TYPE_LENGTH;
@@ -74,7 +74,7 @@ public class PropertyValue implements CSSPrimitiveValue {
     }
     
     public PropertyValue(FSColor color) {
-        _type = CSSPrimitiveValue.CSS_RGBCOLOR;
+        _type = CSSPrimitiveValueExtension.CSS_RGBCOLOR;
         _cssValueType = CSSValue.CSS_PRIMITIVE_VALUE;
         _cssText = color.toString();
         _FSColor = color;
@@ -90,7 +90,7 @@ public class PropertyValue implements CSSPrimitiveValue {
         _cssValueType = _stringValue.equalsIgnoreCase("inherit") ? CSSValue.CSS_INHERIT : CSSValue.CSS_PRIMITIVE_VALUE;
         _cssText = cssText;
         
-        if (type == CSSPrimitiveValue.CSS_IDENT) {
+        if (type == CSSPrimitiveValueExtension.CSS_IDENT) {
             _propertyValueType = VALUE_TYPE_IDENT;
         } else {
             _propertyValueType = VALUE_TYPE_STRING;
@@ -98,7 +98,7 @@ public class PropertyValue implements CSSPrimitiveValue {
     }
     
     public PropertyValue(IdentValue ident) {
-        _type = CSSPrimitiveValue.CSS_IDENT;
+        _type = CSSPrimitiveValueExtension.CSS_IDENT;
         _stringValue = ident.toString();
         _cssValueType = _stringValue.equals("inherit") ? CSSValue.CSS_INHERIT : CSSValue.CSS_PRIMITIVE_VALUE;
         _cssText = ident.toString();
@@ -108,7 +108,7 @@ public class PropertyValue implements CSSPrimitiveValue {
     }
     
     public PropertyValue(List values) {
-        _type = CSSPrimitiveValue.CSS_UNKNOWN; // HACK
+        _type = CSSPrimitiveValueExtension.CSS_UNKNOWN; // HACK
         _cssValueType = CSSValue.CSS_CUSTOM;
         _cssText = values.toString(); // HACK
         
@@ -117,7 +117,7 @@ public class PropertyValue implements CSSPrimitiveValue {
     }
     
     public PropertyValue(FSFunction function) {
-        _type = CSSPrimitiveValue.CSS_UNKNOWN;
+        _type = CSSPrimitiveValueExtension.CSS_UNKNOWN;
         _cssValueType = CSSValue.CSS_CUSTOM;
         _cssText = function.toString();
         

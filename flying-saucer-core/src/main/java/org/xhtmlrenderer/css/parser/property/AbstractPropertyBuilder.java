@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.xhtmlrenderer.css.constants.CSSName;
 import org.xhtmlrenderer.css.constants.IdentValue;
 import org.xhtmlrenderer.css.parser.CSSParseException;
@@ -49,117 +49,118 @@ public abstract class AbstractPropertyBuilder implements PropertyBuilder {
         }
     }
     
-    protected void checkIdentType(CSSName cssName, CSSPrimitiveValue value) {
-        if (value.getPrimitiveType() != CSSPrimitiveValue.CSS_IDENT) {
+    protected void checkIdentType(CSSName cssName, CSSPrimitiveValueExtension value) {
+        if (value.getPrimitiveType() != CSSPrimitiveValueExtension.CSS_IDENT) {
             throw new CSSParseException("Value for " + cssName + " must be an identifier", -1);
         }
     }
     
-    protected void checkIdentOrURIType(CSSName cssName, CSSPrimitiveValue value) {
+    protected void checkIdentOrURIType(CSSName cssName, CSSPrimitiveValueExtension value) {
         int type = value.getPrimitiveType();
-        if (type != CSSPrimitiveValue.CSS_IDENT && type != CSSPrimitiveValue.CSS_URI) {
+        if (type != CSSPrimitiveValueExtension.CSS_IDENT && type != CSSPrimitiveValueExtension.CSS_URI) {
             throw new CSSParseException("Value for " + cssName + " must be an identifier or a URI", -1);
         }
     }
     
-    protected void checkIdentOrColorType(CSSName cssName, CSSPrimitiveValue value) {
+    protected void checkIdentOrColorType(CSSName cssName, CSSPrimitiveValueExtension value) {
         int type = value.getPrimitiveType();
-        if (type != CSSPrimitiveValue.CSS_IDENT && type != CSSPrimitiveValue.CSS_RGBCOLOR) {
+        if (type != CSSPrimitiveValueExtension.CSS_IDENT && type != CSSPrimitiveValueExtension.CSS_RGBCOLOR) {
             throw new CSSParseException("Value for " + cssName + " must be an identifier or a color", -1);
         }
     }  
     
-    protected void checkIdentOrIntegerType(CSSName cssName, CSSPrimitiveValue value) {
+    protected void checkIdentOrIntegerType(CSSName cssName, CSSPrimitiveValueExtension value) {
         int type = value.getPrimitiveType();
-        if ((type != CSSPrimitiveValue.CSS_IDENT && 
-                type != CSSPrimitiveValue.CSS_NUMBER) || 
-            (type == CSSPrimitiveValue.CSS_NUMBER && 
-                    (int)value.getFloatValue(CSSPrimitiveValue.CSS_NUMBER) !=
-                        Math.round(value.getFloatValue(CSSPrimitiveValue.CSS_NUMBER)))) {
+        if ((type != CSSPrimitiveValueExtension.CSS_IDENT &&
+                type != CSSPrimitiveValueExtension.CSS_NUMBER) ||
+            (type == CSSPrimitiveValueExtension.CSS_NUMBER &&
+                    (int)value.getFloatValue(CSSPrimitiveValueExtension.CSS_NUMBER) !=
+                        Math.round(value.getFloatValue(CSSPrimitiveValueExtension.CSS_NUMBER)))) {
             throw new CSSParseException("Value for " + cssName + " must be an identifier or an integer", -1);
         }
     }
     
-    protected void checkInteger(CSSName cssName, CSSPrimitiveValue value) {
+    protected void checkInteger(CSSName cssName, CSSPrimitiveValueExtension value) {
         int type = value.getPrimitiveType();
-        if (type != CSSPrimitiveValue.CSS_NUMBER || 
-                (type == CSSPrimitiveValue.CSS_NUMBER && 
-                    (int)value.getFloatValue(CSSPrimitiveValue.CSS_NUMBER) !=
-                        Math.round(value.getFloatValue(CSSPrimitiveValue.CSS_NUMBER)))) {
+        if (type != CSSPrimitiveValueExtension.CSS_NUMBER ||
+                (type == CSSPrimitiveValueExtension.CSS_NUMBER &&
+                    (int)value.getFloatValue(CSSPrimitiveValueExtension.CSS_NUMBER) !=
+                        Math.round(value.getFloatValue(CSSPrimitiveValueExtension.CSS_NUMBER)))) {
             throw new CSSParseException("Value for " + cssName + " must be an integer", -1);
         }
     }
     
-    protected void checkIdentOrLengthType(CSSName cssName, CSSPrimitiveValue value) {
+    protected void checkIdentOrLengthType(CSSName cssName, CSSPrimitiveValueExtension value) {
         int type = value.getPrimitiveType();
-        if (type != CSSPrimitiveValue.CSS_IDENT && ! isLength(value)) {
+        if (type != CSSPrimitiveValueExtension.CSS_IDENT && ! isLength(value)) {
             throw new CSSParseException("Value for " + cssName + " must be an identifier or a length", -1);
         }
     }
     
-    protected void checkIdentOrNumberType(CSSName cssName, CSSPrimitiveValue value) {
+    protected void checkIdentOrNumberType(CSSName cssName, CSSPrimitiveValueExtension value) {
         int type = value.getPrimitiveType();
-        if (type != CSSPrimitiveValue.CSS_IDENT && type != CSSPrimitiveValue.CSS_NUMBER) {
+        if (type != CSSPrimitiveValueExtension.CSS_IDENT && type != CSSPrimitiveValueExtension.CSS_NUMBER) {
             throw new CSSParseException("Value for " + cssName + " must be an identifier or a length", -1);
         }
     }
     
-    protected void checkIdentLengthOrPercentType(CSSName cssName, CSSPrimitiveValue value) {
+    protected void checkIdentLengthOrPercentType(CSSName cssName, CSSPrimitiveValueExtension value) {
         int type = value.getPrimitiveType();
-        if (type != CSSPrimitiveValue.CSS_IDENT && ! isLength(value) && type != CSSPrimitiveValue.CSS_PERCENTAGE) {
+        if (type != CSSPrimitiveValueExtension.CSS_IDENT && ! isLength(value) && type != CSSPrimitiveValueExtension.CSS_PERCENTAGE) {
             throw new CSSParseException("Value for " + cssName + " must be an identifier, length, or percentage", -1);
         }
     }
     
-    protected void checkLengthOrPercentType(CSSName cssName, CSSPrimitiveValue value) {
+    protected void checkLengthOrPercentType(CSSName cssName, CSSPrimitiveValueExtension value) {
         int type = value.getPrimitiveType();
-        if (! isLength(value) && type != CSSPrimitiveValue.CSS_PERCENTAGE) {
+        if (! isLength(value) && type != CSSPrimitiveValueExtension.CSS_PERCENTAGE) {
             throw new CSSParseException("Value for " + cssName + " must be a length or percentage", -1);
         }
     }
     
-    protected void checkLengthType(CSSName cssName, CSSPrimitiveValue value) {
+    protected void checkLengthType(CSSName cssName, CSSPrimitiveValueExtension value) {
         if (! isLength(value)) {
             throw new CSSParseException("Value for " + cssName + " must be a length", -1);
         }
     }
     
-    protected void checkNumberType(CSSName cssName, CSSPrimitiveValue value) {
-        if (value.getPrimitiveType() != CSSPrimitiveValue.CSS_NUMBER) {
+    protected void checkNumberType(CSSName cssName, CSSPrimitiveValueExtension value) {
+        if (value.getPrimitiveType() != CSSPrimitiveValueExtension.CSS_NUMBER) {
             throw new CSSParseException("Value for " + cssName + " must be a number", -1);
         }
     }
     
-    protected void checkStringType(CSSName cssName, CSSPrimitiveValue value) {
-        if (value.getPrimitiveType() != CSSPrimitiveValue.CSS_STRING) {
+    protected void checkStringType(CSSName cssName, CSSPrimitiveValueExtension value) {
+        if (value.getPrimitiveType() != CSSPrimitiveValueExtension.CSS_STRING) {
             throw new CSSParseException("Value for " + cssName + " must be a string", -1);
         }
     }
     
-    protected void checkIdentOrString(CSSName cssName, CSSPrimitiveValue value) {
+    protected void checkIdentOrString(CSSName cssName, CSSPrimitiveValueExtension value) {
         short type = value.getPrimitiveType();
-        if (type != CSSPrimitiveValue.CSS_STRING && type != CSSPrimitiveValue.CSS_IDENT) {
+        if (type != CSSPrimitiveValueExtension.CSS_STRING && type != CSSPrimitiveValueExtension.CSS_IDENT) {
             throw new CSSParseException("Value for " + cssName + " must be an identifier or string", -1);
         }
     }
     
-    protected void checkIdentLengthNumberOrPercentType(CSSName cssName, CSSPrimitiveValue value) {
+    protected void checkIdentLengthNumberOrPercentType(CSSName cssName, CSSPrimitiveValueExtension value) {
         int type = value.getPrimitiveType();
-        if (type != CSSPrimitiveValue.CSS_IDENT && 
+        if (type != CSSPrimitiveValueExtension.CSS_IDENT &&
                 ! isLength(value) && 
-                type != CSSPrimitiveValue.CSS_PERCENTAGE &&
-                type != CSSPrimitiveValue.CSS_NUMBER) {
+                type != CSSPrimitiveValueExtension.CSS_PERCENTAGE &&
+                type != CSSPrimitiveValueExtension.CSS_NUMBER) {
             throw new CSSParseException("Value for " + cssName + " must be an identifier, length, or percentage", -1);
         }
     }
     
-    protected boolean isLength(CSSPrimitiveValue value) {
+    protected boolean isLength(CSSPrimitiveValueExtension value) {
         int unit = value.getPrimitiveType();
-        return unit == CSSPrimitiveValue.CSS_EMS || unit == CSSPrimitiveValue.CSS_EXS
-                || unit == CSSPrimitiveValue.CSS_PX || unit == CSSPrimitiveValue.CSS_IN
-                || unit == CSSPrimitiveValue.CSS_CM || unit == CSSPrimitiveValue.CSS_MM
-                || unit == CSSPrimitiveValue.CSS_PT || unit == CSSPrimitiveValue.CSS_PC
-                || (unit == CSSPrimitiveValue.CSS_NUMBER && value.getFloatValue(CSSPrimitiveValue.CSS_IN) == 0.0f);
+        return unit == CSSPrimitiveValueExtension.CSS_EMS || unit == CSSPrimitiveValueExtension.CSS_EXS
+                || unit == CSSPrimitiveValueExtension.CSS_EHS
+                || unit == CSSPrimitiveValueExtension.CSS_PX || unit == CSSPrimitiveValueExtension.CSS_IN
+                || unit == CSSPrimitiveValueExtension.CSS_CM || unit == CSSPrimitiveValueExtension.CSS_MM
+                || unit == CSSPrimitiveValueExtension.CSS_PT || unit == CSSPrimitiveValueExtension.CSS_PC
+                || (unit == CSSPrimitiveValueExtension.CSS_NUMBER && value.getFloatValue(CSSPrimitiveValueExtension.CSS_IN) == 0.0f);
     }
     
     protected void checkValidity(CSSName cssName, BitSet validValues, IdentValue value) {
@@ -168,7 +169,7 @@ public abstract class AbstractPropertyBuilder implements PropertyBuilder {
         }
     }
     
-    protected IdentValue checkIdent(CSSName cssName, CSSPrimitiveValue value) {
+    protected IdentValue checkIdent(CSSName cssName, CSSPrimitiveValueExtension value) {
         IdentValue result = IdentValue.valueOf(value.getStringValue());
         if (result == null) {
             throw new CSSParseException("Value " + value.getStringValue() + " is not a recognized identifier", -1);
@@ -181,17 +182,17 @@ public abstract class AbstractPropertyBuilder implements PropertyBuilder {
         return new PropertyDeclaration(newName, decl.getValue(), decl.isImportant(), decl.getOrigin());
     }
     
-    protected void checkInheritAllowed(CSSPrimitiveValue value, boolean inheritAllowed) {
-        if (value.getCssValueType() == CSSPrimitiveValue.CSS_INHERIT && ! inheritAllowed) {
+    protected void checkInheritAllowed(CSSPrimitiveValueExtension value, boolean inheritAllowed) {
+        if (value.getCssValueType() == CSSPrimitiveValueExtension.CSS_INHERIT && ! inheritAllowed) {
             throw new CSSParseException("Invalid use of inherit", -1);
         }
     }
 
     protected List checkInheritAll(CSSName[] all, List values, int origin, boolean important, boolean inheritAllowed) {
         if (values.size() == 1) {
-            CSSPrimitiveValue value = (CSSPrimitiveValue)values.get(0);
+            CSSPrimitiveValueExtension value = (CSSPrimitiveValueExtension)values.get(0);
             checkInheritAllowed(value, inheritAllowed);
-            if (value.getCssValueType() == CSSPrimitiveValue.CSS_INHERIT) {
+            if (value.getCssValueType() == CSSPrimitiveValueExtension.CSS_INHERIT) {
                 List result = new ArrayList(all.length);
                 for (int i = 0; i < all.length; i++) {
                     result.add(

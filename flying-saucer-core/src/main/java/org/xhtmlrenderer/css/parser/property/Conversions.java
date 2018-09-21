@@ -23,7 +23,7 @@ package org.xhtmlrenderer.css.parser.property;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.xhtmlrenderer.css.constants.IdentValue;
 import org.xhtmlrenderer.css.parser.FSRGBColor;
 import org.xhtmlrenderer.css.parser.PropertyValue;
@@ -188,9 +188,9 @@ public class Conversions {
     }
     
     static {
-        BORDER_WIDTHS.put("thin", new PropertyValue(CSSPrimitiveValue.CSS_PX, 1.0f, "1px"));
-        BORDER_WIDTHS.put("medium", new PropertyValue(CSSPrimitiveValue.CSS_PX, 2.0f, "2px"));
-        BORDER_WIDTHS.put("thick", new PropertyValue(CSSPrimitiveValue.CSS_PX, 3.0f, "3px"));
+        BORDER_WIDTHS.put("thin", new PropertyValue(CSSPrimitiveValueExtension.CSS_PX, 1.0f, "1px"));
+        BORDER_WIDTHS.put("medium", new PropertyValue(CSSPrimitiveValueExtension.CSS_PX, 2.0f, "2px"));
+        BORDER_WIDTHS.put("thick", new PropertyValue(CSSPrimitiveValueExtension.CSS_PX, 3.0f, "3px"));
     }
     
     public static FSRGBColor getColor(String ident) {

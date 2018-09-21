@@ -37,4 +37,6 @@ public interface FSFontMetrics {
     public float getUnderlineOffset();
     
     public float getUnderlineThickness();
+
+    public float getCapHeight();
 }

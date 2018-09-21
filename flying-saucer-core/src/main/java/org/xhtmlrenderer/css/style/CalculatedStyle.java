@@ -608,7 +608,7 @@ public class CalculatedStyle {
         }
     }
 
-    private FSDerivedValue deriveValue(CSSName cssName, org.w3c.dom.css.CSSPrimitiveValue value) {
+    private FSDerivedValue deriveValue(CSSName cssName, org.w3c.dom.css.CSSPrimitiveValueExtension value) {
         return DerivedValueFactory.newDerivedValue(this, cssName, (PropertyValue) value);
     }
 

@@ -20,7 +20,7 @@
  */
 package org.xhtmlrenderer.css.constants;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.w3c.dom.css.CSSValue;
 import org.xhtmlrenderer.util.GeneralUtil;
 import org.xhtmlrenderer.util.XRLog;
@@ -80,26 +80,28 @@ public final class ValueConstants {
      */
     public static short sacPrimitiveTypeForString(String type) {
         if ("em".equals(type)) {
-            return CSSPrimitiveValue.CSS_EMS;
+            return CSSPrimitiveValueExtension.CSS_EMS;
         } else if ("ex".equals(type)) {
-            return CSSPrimitiveValue.CSS_EXS;
+            return CSSPrimitiveValueExtension.CSS_EXS;
+        } else if ("eh".equals(type)) {
+            return CSSPrimitiveValueExtension.CSS_EHS;
         } else if ("px".equals(type)) {
-            return CSSPrimitiveValue.CSS_PX;
+            return CSSPrimitiveValueExtension.CSS_PX;
         } else if ("%".equals(type)) {
-            return CSSPrimitiveValue.CSS_PERCENTAGE;
+            return CSSPrimitiveValueExtension.CSS_PERCENTAGE;
         } else if ("in".equals(type)) {
-            return CSSPrimitiveValue.CSS_IN;
+            return CSSPrimitiveValueExtension.CSS_IN;
         } else if ("cm".equals(type)) {
-            return CSSPrimitiveValue.CSS_CM;
+            return CSSPrimitiveValueExtension.CSS_CM;
         } else if ("mm".equals(type)) {
-            return CSSPrimitiveValue.CSS_MM;
+            return CSSPrimitiveValueExtension.CSS_MM;
         } else if ("pt".equals(type)) {
-            return CSSPrimitiveValue.CSS_PT;
+            return CSSPrimitiveValueExtension.CSS_PT;
         } else if ("pc".equals(type)) {
-            return CSSPrimitiveValue.CSS_PC;
+            return CSSPrimitiveValueExtension.CSS_PC;
         } else if (type == null) {
             //this is only valid if length is 0
-            return CSSPrimitiveValue.CSS_PX;
+            return CSSPrimitiveValueExtension.CSS_PX;
         } else {
             throw new XRRuntimeException("Unknown type on CSS value: " + type);
         }
@@ -125,9 +127,9 @@ public final class ValueConstants {
      * @return See desc.
      */
     //TODO: method may be unnecessary (tobe)
-    public static boolean isAbsoluteUnit(CSSPrimitiveValue primitive) {
+    public static boolean isAbsoluteUnit(CSSPrimitiveValueExtension primitive) {
         short type = 0;
-        type = ((CSSPrimitiveValue) primitive).getPrimitiveType();
+        type = ((CSSPrimitiveValueExtension) primitive).getPrimitiveType();
         return isAbsoluteUnit(type);
     }
 
@@ -147,51 +149,52 @@ public final class ValueConstants {
         // note, all types are included here to make sure none are missed
         switch (type) {
             // proportional length or size
-            case CSSPrimitiveValue.CSS_PERCENTAGE:
+            case CSSPrimitiveValueExtension.CSS_PERCENTAGE:
                 return false;
                 // refer to values known to the DerivedValue instance (tobe)
-            case CSSPrimitiveValue.CSS_EMS:
-            case CSSPrimitiveValue.CSS_EXS:
+            case CSSPrimitiveValueExtension.CSS_EMS:
+            case CSSPrimitiveValueExtension.CSS_EXS:
+            case CSSPrimitiveValueExtension.CSS_EHS:
                 // length
-            case CSSPrimitiveValue.CSS_IN:
-            case CSSPrimitiveValue.CSS_CM:
-            case CSSPrimitiveValue.CSS_MM:
-            case CSSPrimitiveValue.CSS_PT:
-            case CSSPrimitiveValue.CSS_PC:
-            case CSSPrimitiveValue.CSS_PX:
+            case CSSPrimitiveValueExtension.CSS_IN:
+            case CSSPrimitiveValueExtension.CSS_CM:
+            case CSSPrimitiveValueExtension.CSS_MM:
+            case CSSPrimitiveValueExtension.CSS_PT:
+            case CSSPrimitiveValueExtension.CSS_PC:
+            case CSSPrimitiveValueExtension.CSS_PX:
 
                 // color
-            case CSSPrimitiveValue.CSS_RGBCOLOR:
+            case CSSPrimitiveValueExtension.CSS_RGBCOLOR:
 
                 // ?
-            case CSSPrimitiveValue.CSS_ATTR:
-            case CSSPrimitiveValue.CSS_DIMENSION:
-            case CSSPrimitiveValue.CSS_NUMBER:
-            case CSSPrimitiveValue.CSS_RECT:
+            case CSSPrimitiveValueExtension.CSS_ATTR:
+            case CSSPrimitiveValueExtension.CSS_DIMENSION:
+            case CSSPrimitiveValueExtension.CSS_NUMBER:
+            case CSSPrimitiveValueExtension.CSS_RECT:
 
                 // counters
-            case CSSPrimitiveValue.CSS_COUNTER:
+            case CSSPrimitiveValueExtension.CSS_COUNTER:
 
                 // angles
-            case CSSPrimitiveValue.CSS_DEG:
-            case CSSPrimitiveValue.CSS_GRAD:
-            case CSSPrimitiveValue.CSS_RAD:
+            case CSSPrimitiveValueExtension.CSS_DEG:
+            case CSSPrimitiveValueExtension.CSS_GRAD:
+            case CSSPrimitiveValueExtension.CSS_RAD:
 
                 // aural - freq
-            case CSSPrimitiveValue.CSS_HZ:
-            case CSSPrimitiveValue.CSS_KHZ:
+            case CSSPrimitiveValueExtension.CSS_HZ:
+            case CSSPrimitiveValueExtension.CSS_KHZ:
 
                 // time
-            case CSSPrimitiveValue.CSS_S:
-            case CSSPrimitiveValue.CSS_MS:
+            case CSSPrimitiveValueExtension.CSS_S:
+            case CSSPrimitiveValueExtension.CSS_MS:
 
                 // URI
-            case CSSPrimitiveValue.CSS_URI:
+            case CSSPrimitiveValueExtension.CSS_URI:
 
-            case CSSPrimitiveValue.CSS_IDENT:
-            case CSSPrimitiveValue.CSS_STRING:
+            case CSSPrimitiveValueExtension.CSS_IDENT:
+            case CSSPrimitiveValueExtension.CSS_STRING:
                 return true;
-            case CSSPrimitiveValue.CSS_UNKNOWN:
+            case CSSPrimitiveValueExtension.CSS_UNKNOWN:
                 XRLog.cascade(Level.WARNING, "Asked whether type was absolute, given CSS_UNKNOWN as the type. " +
                         "Might be one of those funny values like background-position.");
                 GeneralUtil.dumpShortException(new Exception());
@@ -234,18 +237,19 @@ public final class ValueConstants {
         switch (cssPrimitiveType) {
             // fall thru on all these
             // relative length or size
-            case CSSPrimitiveValue.CSS_EMS:
-            case CSSPrimitiveValue.CSS_EXS:
-            case CSSPrimitiveValue.CSS_PERCENTAGE:
+            case CSSPrimitiveValueExtension.CSS_EMS:
+            case CSSPrimitiveValueExtension.CSS_EXS:
+            case CSSPrimitiveValueExtension.CSS_EHS:
+            case CSSPrimitiveValueExtension.CSS_PERCENTAGE:
                 // relatives will be treated separately from lengths;
                 return false;
                 // length
-            case CSSPrimitiveValue.CSS_PX:
-            case CSSPrimitiveValue.CSS_IN:
-            case CSSPrimitiveValue.CSS_CM:
-            case CSSPrimitiveValue.CSS_MM:
-            case CSSPrimitiveValue.CSS_PT:
-            case CSSPrimitiveValue.CSS_PC:
+            case CSSPrimitiveValueExtension.CSS_PX:
+            case CSSPrimitiveValueExtension.CSS_IN:
+            case CSSPrimitiveValueExtension.CSS_CM:
+            case CSSPrimitiveValueExtension.CSS_MM:
+            case CSSPrimitiveValueExtension.CSS_PT:
+            case CSSPrimitiveValueExtension.CSS_PC:
                 return true;
             default:
                 return false;
@@ -256,7 +260,7 @@ public final class ValueConstants {
         SortedMap map = new TreeMap();
         TYPE_DESCRIPTIONS = new ArrayList();
         try {
-            Field fields[] = CSSPrimitiveValue.class.getFields();
+            Field fields[] = CSSPrimitiveValueExtension.class.getFields();
             for (int i = 0; i < fields.length; i++) {
                 Field f = fields[i];
                 int mod = f.getModifiers();
@@ -294,58 +298,61 @@ public final class ValueConstants {
 
         // HACK: this is a quick way to perform the lookup, but dumb if the short assigned are > 100; but the compiler will tell us that (PWW 21-01-05)
         sacTypesStrings = new HashMap(25);
-        sacTypesStrings.put(new Short(CSSPrimitiveValue.CSS_EMS), "em");
-        sacTypesStrings.put(new Short(CSSPrimitiveValue.CSS_EXS), "ex");
-        sacTypesStrings.put(new Short(CSSPrimitiveValue.CSS_PX), "px");
-        sacTypesStrings.put(new Short(CSSPrimitiveValue.CSS_PERCENTAGE), "%");
-        sacTypesStrings.put(new Short(CSSPrimitiveValue.CSS_IN), "in");
-        sacTypesStrings.put(new Short(CSSPrimitiveValue.CSS_CM), "cm");
-        sacTypesStrings.put(new Short(CSSPrimitiveValue.CSS_MM), "mm");
-        sacTypesStrings.put(new Short(CSSPrimitiveValue.CSS_PT), "pt");
-        sacTypesStrings.put(new Short(CSSPrimitiveValue.CSS_PC), "pc");
+        sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_EMS), "em");
+        sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_EXS), "ex");
+        sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_EHS), "eh");
+        sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_PX), "px");
+        sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_PERCENTAGE), "%");
+        sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_IN), "in");
+        sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_CM), "cm");
+        sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_MM), "mm");
+        sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_PT), "pt");
+        sacTypesStrings.put(new Short(CSSPrimitiveValueExtension.CSS_PC), "pc");
     }
 
     /**
      * Incomplete routine to try and determine the
-     * CSSPrimitiveValue short code for a given value,
+     * CSSPrimitiveValueExtension short code for a given value,
      * e.g. 14pt is CSS_PT.
      *
      * @param value PARAM
      * @return Returns
      */
     public static short guessType(String value) {
-        short type = CSSPrimitiveValue.CSS_STRING;
+        short type = CSSPrimitiveValueExtension.CSS_STRING;
         if (value != null && value.length() > 1) {
             if (value.endsWith("%")) {
-                type = CSSPrimitiveValue.CSS_PERCENTAGE;
+                type = CSSPrimitiveValueExtension.CSS_PERCENTAGE;
             } else if (value.startsWith("rgb") || value.startsWith("#")) {
-                type = CSSPrimitiveValue.CSS_RGBCOLOR;
+                type = CSSPrimitiveValueExtension.CSS_RGBCOLOR;
             } else {
                 String hmm = value.substring(value.length() - 2);
                 if ("pt".equals(hmm)) {
-                    type = CSSPrimitiveValue.CSS_PT;
+                    type = CSSPrimitiveValueExtension.CSS_PT;
                 } else if ("px".equals(hmm)) {
-                    type = CSSPrimitiveValue.CSS_PX;
+                    type = CSSPrimitiveValueExtension.CSS_PX;
                 } else if ("em".equals(hmm)) {
-                    type = CSSPrimitiveValue.CSS_EMS;
+                    type = CSSPrimitiveValueExtension.CSS_EMS;
                 } else if ("ex".equals(hmm)) {
-                    type = CSSPrimitiveValue.CSS_EXS;
+                    type = CSSPrimitiveValueExtension.CSS_EXS;
+                } else if ("eh".equals(hmm)) {
+                    type = CSSPrimitiveValueExtension.CSS_EHS;
                 } else if ("in".equals(hmm)) {
-                    type = CSSPrimitiveValue.CSS_IN;
+                    type = CSSPrimitiveValueExtension.CSS_IN;
                 } else if ("cm".equals(hmm)) {
-                    type = CSSPrimitiveValue.CSS_CM;
+                    type = CSSPrimitiveValueExtension.CSS_CM;
                 } else if ("mm".equals(hmm)) {
-                    type = CSSPrimitiveValue.CSS_MM;
+                    type = CSSPrimitiveValueExtension.CSS_MM;
                 } else {
                     if (Character.isDigit(value.charAt(value.length() - 1))) {
                         try {
                             new Float(value);
-                            type = CSSPrimitiveValue.CSS_NUMBER;
+                            type = CSSPrimitiveValueExtension.CSS_NUMBER;
                         } catch (NumberFormatException ex) {
-                            type = CSSPrimitiveValue.CSS_STRING;
+                            type = CSSPrimitiveValueExtension.CSS_STRING;
                         }
                     } else {
-                        type = CSSPrimitiveValue.CSS_STRING;
+                        type = CSSPrimitiveValueExtension.CSS_STRING;
                     }
                 }
             }

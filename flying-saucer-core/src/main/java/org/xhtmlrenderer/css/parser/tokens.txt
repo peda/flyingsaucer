@@ -23,6 +23,7 @@ FONT_FACE_SYM,@font-face
 AT_RULE,at rule
 IMPORTANT_SYM,!important
 EMS,an em value
+EHS,an eh value
 EXS,an ex value
 PX,a pixel value
 CM,a centimeter value

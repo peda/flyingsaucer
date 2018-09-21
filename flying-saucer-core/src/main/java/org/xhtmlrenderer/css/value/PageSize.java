@@ -22,64 +22,64 @@ package org.xhtmlrenderer.css.value;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 
 public class PageSize {
     /**
      * ISO A5 media: 148mm wide and 210 mm high
      */
     public static final PageSize A5 = new PageSize(
-            new FSCssValue(CSSPrimitiveValue.CSS_MM, "148mm"),
-            new FSCssValue(CSSPrimitiveValue.CSS_MM, "210mm"));
+            new FSCssValue(CSSPrimitiveValueExtension.CSS_MM, "148mm"),
+            new FSCssValue(CSSPrimitiveValueExtension.CSS_MM, "210mm"));
     
     /**
      * IS0 A4 media: 210 mm wide and 297 mm high
      */
     public static final PageSize A4 = new PageSize(
-            new FSCssValue(CSSPrimitiveValue.CSS_MM, "210mm"),
-            new FSCssValue(CSSPrimitiveValue.CSS_MM, "297mm"));
+            new FSCssValue(CSSPrimitiveValueExtension.CSS_MM, "210mm"),
+            new FSCssValue(CSSPrimitiveValueExtension.CSS_MM, "297mm"));
     
     /**
      * ISO A3 media: 297mm wide and 420mm high
      */
     public static final PageSize A3 = new PageSize(
-            new FSCssValue(CSSPrimitiveValue.CSS_MM, "297mm"),
-            new FSCssValue(CSSPrimitiveValue.CSS_MM, "420mm"));
+            new FSCssValue(CSSPrimitiveValueExtension.CSS_MM, "297mm"),
+            new FSCssValue(CSSPrimitiveValueExtension.CSS_MM, "420mm"));
     
     /**
      * ISO B3 media: 176mm wide by 250mm high
      */
     public static final PageSize B3 = new PageSize(
-            new FSCssValue(CSSPrimitiveValue.CSS_MM, "176mm"),
-            new FSCssValue(CSSPrimitiveValue.CSS_MM, "250mm"));    
+            new FSCssValue(CSSPrimitiveValueExtension.CSS_MM, "176mm"),
+            new FSCssValue(CSSPrimitiveValueExtension.CSS_MM, "250mm"));
     
     /**
      * ISO B4 media: 250mm wide by 353mm high
      */
     public static final PageSize B4 = new PageSize(
-            new FSCssValue(CSSPrimitiveValue.CSS_MM, "250mm"),
-            new FSCssValue(CSSPrimitiveValue.CSS_MM, "353mm"));
+            new FSCssValue(CSSPrimitiveValueExtension.CSS_MM, "250mm"),
+            new FSCssValue(CSSPrimitiveValueExtension.CSS_MM, "353mm"));
     
     /**
      * North American letter media: 8.5 inches wide and 11 inches high
      */
     public static final PageSize LETTER = new PageSize(
-            new FSCssValue(CSSPrimitiveValue.CSS_MM, "8.5in"),
-            new FSCssValue(CSSPrimitiveValue.CSS_MM, "11in"));
+            new FSCssValue(CSSPrimitiveValueExtension.CSS_MM, "8.5in"),
+            new FSCssValue(CSSPrimitiveValueExtension.CSS_MM, "11in"));
     
     /**
      * North American legal: 8.5 inches wide by 14 inches high
      */
     public static final PageSize LEGAL = new PageSize(
-            new FSCssValue(CSSPrimitiveValue.CSS_MM, "8.5in"),
-            new FSCssValue(CSSPrimitiveValue.CSS_MM, "14in"));
+            new FSCssValue(CSSPrimitiveValueExtension.CSS_MM, "8.5in"),
+            new FSCssValue(CSSPrimitiveValueExtension.CSS_MM, "14in"));
     
     /**
      * North American ledger: 11 inches wide by 17 inches high
      */
     public static final PageSize LEDGER = new PageSize(
-            new FSCssValue(CSSPrimitiveValue.CSS_MM, "11in"),
-            new FSCssValue(CSSPrimitiveValue.CSS_MM, "17in"));
+            new FSCssValue(CSSPrimitiveValueExtension.CSS_MM, "11in"),
+            new FSCssValue(CSSPrimitiveValueExtension.CSS_MM, "17in"));
     
     private static final Map SIZE_MAP;
     
@@ -95,10 +95,10 @@ public class PageSize {
         SIZE_MAP.put("ledger", LEDGER);
     }
     
-    private CSSPrimitiveValue _pageWidth;
-    private CSSPrimitiveValue _pageHeight;
+    private CSSPrimitiveValueExtension _pageWidth;
+    private CSSPrimitiveValueExtension _pageHeight;
     
-    private PageSize(CSSPrimitiveValue width, CSSPrimitiveValue height) {
+    private PageSize(CSSPrimitiveValueExtension width, CSSPrimitiveValueExtension height) {
         _pageWidth = width;
         _pageHeight = height;
     }
@@ -106,11 +106,11 @@ public class PageSize {
     private PageSize() {
     }
 
-    public CSSPrimitiveValue getPageHeight() {
+    public CSSPrimitiveValueExtension getPageHeight() {
         return _pageHeight;
     }
     
-    public CSSPrimitiveValue getPageWidth() {
+    public CSSPrimitiveValueExtension getPageWidth() {
         return _pageWidth;
     }
     

@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.w3c.dom.css.CSSValue;
 import org.xhtmlrenderer.css.constants.CSSName;
 import org.xhtmlrenderer.css.constants.IdentValue;
@@ -41,7 +41,7 @@ public class ContentPropertyBuilder extends AbstractPropertyBuilder {
             PropertyValue value = (PropertyValue)values.get(0);
             if (value.getCssValueType() == CSSValue.CSS_INHERIT) {
                 return Collections.EMPTY_LIST;
-            } else if (value.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT) {
+            } else if (value.getPrimitiveType() == CSSPrimitiveValueExtension.CSS_IDENT) {
                 IdentValue ident = checkIdent(CSSName.CONTENT, value);
                 if (ident == IdentValue.NONE || ident == IdentValue.NORMAL) {
                     return Collections.singletonList(
@@ -60,9 +60,9 @@ public class ContentPropertyBuilder extends AbstractPropertyBuilder {
             }
             
             short type = value.getPrimitiveType();
-            if (type == CSSPrimitiveValue.CSS_URI) {
+            if (type == CSSPrimitiveValueExtension.CSS_URI) {
                 continue;
-            } else if (type == CSSPrimitiveValue.CSS_STRING) {
+            } else if (type == CSSPrimitiveValueExtension.CSS_STRING) {
                 resultValues.add(value);
             } else if (value.getPropertyValueType() == PropertyValue.VALUE_TYPE_FUNCTION) {
                 if (! isFunctionAllowed(value.getFunction())) {
@@ -70,7 +70,7 @@ public class ContentPropertyBuilder extends AbstractPropertyBuilder {
                             "Function " + value.getFunction().getName() + " is not allowed here", -1);
                 }
                 resultValues.add(value);
-            } else if (type == CSSPrimitiveValue.CSS_IDENT) {
+            } else if (type == CSSPrimitiveValueExtension.CSS_IDENT) {
                 IdentValue ident = checkIdent(CSSName.CONTENT, value);
                 if (ident == IdentValue.OPEN_QUOTE || ident == IdentValue.CLOSE_QUOTE ||
                         ident == IdentValue.NO_CLOSE_QUOTE || ident == IdentValue.NO_OPEN_QUOTE) {

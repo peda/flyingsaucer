@@ -21,7 +21,7 @@
 package org.xhtmlrenderer.css.util;
 
 import java.awt.Color;
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.w3c.dom.css.RGBColor;
 
 
@@ -38,9 +38,9 @@ public class ConversionUtil {
      * @return        Returns
      */
     public static Color rgbToColor( RGBColor rgbcol ) {
-        return new java.awt.Color( rgbcol.getRed().getFloatValue( CSSPrimitiveValue.CSS_NUMBER ) / 255f,
-                rgbcol.getGreen().getFloatValue( CSSPrimitiveValue.CSS_NUMBER ) / 255f,
-                rgbcol.getBlue().getFloatValue( CSSPrimitiveValue.CSS_NUMBER ) / 255f );
+        return new java.awt.Color( rgbcol.getRed().getFloatValue( CSSPrimitiveValueExtension.CSS_NUMBER ) / 255f,
+                rgbcol.getGreen().getFloatValue( CSSPrimitiveValueExtension.CSS_NUMBER ) / 255f,
+                rgbcol.getBlue().getFloatValue( CSSPrimitiveValueExtension.CSS_NUMBER ) / 255f );
     }
 }// end class
 

@@ -12,7 +12,7 @@ import org.xhtmlrenderer.util.XRRuntimeException;
  *
  * @author empty
  */
-public class FSCssValue implements org.w3c.dom.css.CSSPrimitiveValue {
+public class FSCssValue implements org.w3c.dom.css.CSSPrimitiveValueExtension {
     /** */
     //not used private String propName;
     /** Description of the Field */
@@ -47,11 +47,11 @@ public class FSCssValue implements org.w3c.dom.css.CSSPrimitiveValue {
      *
      * @param primitive PARAM
      */
-    public FSCssValue(org.w3c.dom.css.CSSPrimitiveValue primitive) {
+    public FSCssValue(org.w3c.dom.css.CSSPrimitiveValueExtension primitive) {
         //not used this.cssName = cssName;
         //not used this.propName = cssName.toString();
         this.primitiveType = primitive.getPrimitiveType();
-        this._cssText = (primitiveType == CSSPrimitiveValue.CSS_STRING ?
+        this._cssText = (primitiveType == CSSPrimitiveValueExtension.CSS_STRING ?
                 primitive.getStringValue() :
                 primitive.getCssText());
 
@@ -65,42 +65,44 @@ public class FSCssValue implements org.w3c.dom.css.CSSPrimitiveValue {
 
         // convert type as necessary
         switch (primitiveType) {
-            case org.w3c.dom.css.CSSPrimitiveValue.CSS_RGBCOLOR:
+            case org.w3c.dom.css.CSSPrimitiveValueExtension.CSS_RGBCOLOR:
                 this.rgbColorValue = primitive.getRGBColorValue();
                 break;
-            case org.w3c.dom.css.CSSPrimitiveValue.CSS_IDENT:
+            case org.w3c.dom.css.CSSPrimitiveValueExtension.CSS_IDENT:
                 break;
-            case org.w3c.dom.css.CSSPrimitiveValue.CSS_STRING:
+            case org.w3c.dom.css.CSSPrimitiveValueExtension.CSS_STRING:
                 // ASK: do we need this? not clear when a CSS_STRING is meaningful (PWW 24-01-05)
                 break;
-            case org.w3c.dom.css.CSSPrimitiveValue.CSS_COUNTER:
+            case org.w3c.dom.css.CSSPrimitiveValueExtension.CSS_COUNTER:
                 this.counter = primitive.getCounterValue();
                 break;
-            case org.w3c.dom.css.CSSPrimitiveValue.CSS_RECT:
+            case org.w3c.dom.css.CSSPrimitiveValueExtension.CSS_RECT:
                 this.rectValue = primitive.getRectValue();
                 break;
-            case org.w3c.dom.css.CSSPrimitiveValue.CSS_URI:
+            case org.w3c.dom.css.CSSPrimitiveValueExtension.CSS_URI:
                 this._cssText = primitive.getStringValue();
                 break;
-            case CSSPrimitiveValue.CSS_IN:
+            case CSSPrimitiveValueExtension.CSS_IN:
                 // fall-thru
-            case CSSPrimitiveValue.CSS_CM:
+            case CSSPrimitiveValueExtension.CSS_CM:
                 // fall-thru
-            case CSSPrimitiveValue.CSS_EMS:
+            case CSSPrimitiveValueExtension.CSS_EMS:
                 // fall-thru
-            case CSSPrimitiveValue.CSS_EXS:
+            case CSSPrimitiveValueExtension.CSS_EXS:
                 // fall-thru
-            case CSSPrimitiveValue.CSS_MM:
+            case CSSPrimitiveValueExtension.CSS_EHS:
                 // fall-thru
-            case CSSPrimitiveValue.CSS_NUMBER:
+            case CSSPrimitiveValueExtension.CSS_MM:
                 // fall-thru
-            case CSSPrimitiveValue.CSS_PC:
+            case CSSPrimitiveValueExtension.CSS_NUMBER:
                 // fall-thru
-            case CSSPrimitiveValue.CSS_PERCENTAGE:
+            case CSSPrimitiveValueExtension.CSS_PC:
                 // fall-thru
-            case CSSPrimitiveValue.CSS_PT:
+            case CSSPrimitiveValueExtension.CSS_PERCENTAGE:
                 // fall-thru
-            case CSSPrimitiveValue.CSS_PX:
+            case CSSPrimitiveValueExtension.CSS_PT:
+                // fall-thru
+            case CSSPrimitiveValueExtension.CSS_PX:
                 this.floatValue = primitive.getFloatValue(primitiveType);
                 break;
             default:
@@ -117,7 +119,7 @@ public class FSCssValue implements org.w3c.dom.css.CSSPrimitiveValue {
      * @param primitive PARAM
      * @param newValue  PARAM
      */
-    public FSCssValue(org.w3c.dom.css.CSSPrimitiveValue primitive, String newValue) {
+    public FSCssValue(org.w3c.dom.css.CSSPrimitiveValueExtension primitive, String newValue) {
         this(primitive);
         this._cssText = newValue;
     }
@@ -128,7 +130,7 @@ public class FSCssValue implements org.w3c.dom.css.CSSPrimitiveValue {
     }
 
     public static FSCssValue getNewIdentValue(String identValue) {
-        return new FSCssValue(CSSPrimitiveValue.CSS_IDENT, identValue);
+        return new FSCssValue(CSSPrimitiveValueExtension.CSS_IDENT, identValue);
     }
 
     /**

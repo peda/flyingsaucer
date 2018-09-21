@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.xhtmlrenderer.css.constants.CSSName;
 import org.xhtmlrenderer.css.constants.IdentValue;
 import org.xhtmlrenderer.css.constants.MarginBoxName;
@@ -149,7 +149,7 @@ public class PageBox {
                     CSSName.FS_PAGE_WIDTH,
                     "8.5in",
                     8.5f,
-                    CSSPrimitiveValue.CSS_IN,
+                    CSSPrimitiveValueExtension.CSS_IN,
                     0,
                     cssCtx);
         } else {
@@ -158,7 +158,7 @@ public class PageBox {
                     CSSName.FS_PAGE_WIDTH,
                     "210mm",
                     210f,
-                    CSSPrimitiveValue.CSS_MM,
+                    CSSPrimitiveValueExtension.CSS_MM,
                     0,
                     cssCtx);            
         }
@@ -171,7 +171,7 @@ public class PageBox {
                     CSSName.FS_PAGE_HEIGHT,
                     "11in",
                     11f,
-                    CSSPrimitiveValue.CSS_IN,
+                    CSSPrimitiveValueExtension.CSS_IN,
                     0,
                     cssCtx);
         } else {
@@ -180,7 +180,7 @@ public class PageBox {
                     CSSName.FS_PAGE_HEIGHT,
                     "297mm",
                     297f,
-                    CSSPrimitiveValue.CSS_MM,
+                    CSSPrimitiveValueExtension.CSS_MM,
                     0,
                     cssCtx);            
         }

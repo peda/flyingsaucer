@@ -19,7 +19,7 @@
  */
 package org.xhtmlrenderer.css.style;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.xhtmlrenderer.css.constants.CSSName;
 import org.xhtmlrenderer.css.constants.IdentValue;
 import org.xhtmlrenderer.css.constants.ValueConstants;
@@ -51,10 +51,10 @@ public abstract class DerivedValue implements FSDerivedValue {
 
     private String deriveStringValue(String cssText, String cssStringValue) {
             switch (_cssSacUnitType) {
-                case CSSPrimitiveValue.CSS_IDENT:
-                case CSSPrimitiveValue.CSS_STRING:
-                case CSSPrimitiveValue.CSS_URI:
-                case CSSPrimitiveValue.CSS_ATTR:
+                case CSSPrimitiveValueExtension.CSS_IDENT:
+                case CSSPrimitiveValueExtension.CSS_STRING:
+                case CSSPrimitiveValueExtension.CSS_URI:
+                case CSSPrimitiveValueExtension.CSS_ATTR:
                     return ( cssStringValue == null ? cssText : cssStringValue );
                 default:
                     return cssText;

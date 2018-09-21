@@ -33,7 +33,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 import org.w3c.dom.EntityReference;
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.xhtmlrenderer.css.constants.CSSName;
 import org.xhtmlrenderer.css.constants.IdentValue;
 import org.xhtmlrenderer.css.constants.MarginBoxName;
@@ -154,7 +154,7 @@ public class BoxBuilder {
                                 StylesheetInfo.USER),
                         new PropertyDeclaration(
                                 CSSName.WIDTH,
-                                new PropertyValue(CSSPrimitiveValue.CSS_PERCENTAGE, 100.0f, "100%"),
+                                new PropertyValue(CSSPrimitiveValueExtension.CSS_PERCENTAGE, 100.0f, "100%"),
                                 true,
                                 StylesheetInfo.USER),
                 }));
@@ -677,7 +677,7 @@ public class BoxBuilder {
             List params = function.getParameters();
             if (params.size() == 1) {
                 PropertyValue value = (PropertyValue) params.get(0);
-                return value.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT;
+                return value.getPrimitiveType() == CSSPrimitiveValueExtension.CSS_IDENT;
             }
         }
 
@@ -692,10 +692,10 @@ public class BoxBuilder {
             }
             boolean ok = true;
             PropertyValue value1 = (PropertyValue) params.get(0);
-            ok = value1.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT;
+            ok = value1.getPrimitiveType() == CSSPrimitiveValueExtension.CSS_IDENT;
             if (ok && params.size() == 2) {
                 PropertyValue value2 = (PropertyValue) params.get(1);
-                ok = value2.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT;
+                ok = value2.getPrimitiveType() == CSSPrimitiveValueExtension.CSS_IDENT;
             }
 
             return ok;
@@ -712,7 +712,7 @@ public class BoxBuilder {
             }
 
             PropertyValue value = (PropertyValue) params.get(0);
-            if (value.getPrimitiveType() != CSSPrimitiveValue.CSS_IDENT) {
+            if (value.getPrimitiveType() != CSSPrimitiveValueExtension.CSS_IDENT) {
                 return null;
             }
 
@@ -726,7 +726,7 @@ public class BoxBuilder {
             IdentValue listStyleType = IdentValue.DECIMAL;
             if (params.size() == 2) {
                 value = (PropertyValue) params.get(1);
-                if (value.getPrimitiveType() != CSSPrimitiveValue.CSS_IDENT) {
+                if (value.getPrimitiveType() != CSSPrimitiveValueExtension.CSS_IDENT) {
                     return null;
                 }
 
@@ -747,14 +747,14 @@ public class BoxBuilder {
             }
 
             PropertyValue value = (PropertyValue) params.get(0);
-            if (value.getPrimitiveType() != CSSPrimitiveValue.CSS_IDENT) {
+            if (value.getPrimitiveType() != CSSPrimitiveValueExtension.CSS_IDENT) {
                 return null;
             }
 
             String counter = value.getStringValue();
 
             value = (PropertyValue) params.get(1);
-            if (value.getPrimitiveType() != CSSPrimitiveValue.CSS_STRING) {
+            if (value.getPrimitiveType() != CSSPrimitiveValueExtension.CSS_STRING) {
                 return null;
             }
 
@@ -763,7 +763,7 @@ public class BoxBuilder {
             IdentValue listStyleType = IdentValue.DECIMAL;
             if (params.size() == 3) {
                 value = (PropertyValue) params.get(2);
-                if (value.getPrimitiveType() != CSSPrimitiveValue.CSS_IDENT) {
+                if (value.getPrimitiveType() != CSSPrimitiveValueExtension.CSS_IDENT) {
                     return null;
                 }
 
@@ -808,7 +808,7 @@ public class BoxBuilder {
             String content = null;
 
             short type = value.getPrimitiveType();
-            if (type == CSSPrimitiveValue.CSS_STRING) {
+            if (type == CSSPrimitiveValueExtension.CSS_STRING) {
                 content = value.getStringValue();
             } else if (value.getPropertyValueType() == PropertyValue.VALUE_TYPE_FUNCTION) {
                 if (mode == CONTENT_LIST_DOCUMENT && isAttrFunction(value.getFunction())) {
@@ -847,7 +847,7 @@ public class BoxBuilder {
                         }
                     }
                 }
-            } else if (type == CSSPrimitiveValue.CSS_IDENT) {
+            } else if (type == CSSPrimitiveValueExtension.CSS_IDENT) {
                 FSDerivedValue dv = style.valueByName(CSSName.QUOTES);
 
                 if (dv != IdentValue.NONE) {
@@ -924,7 +924,7 @@ public class BoxBuilder {
             }
 
             if (contentDecl != null) {
-                CSSPrimitiveValue propValue = contentDecl.getValue();
+                CSSPrimitiveValueExtension propValue = contentDecl.getValue();
                 children.addAll(createGeneratedContent(c, element, peName, calculatedStyle,
                         (PropertyValue) propValue, info));
             }

@@ -22,7 +22,7 @@ package org.xhtmlrenderer.css.parser.property;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.w3c.dom.css.CSSValue;
 import org.xhtmlrenderer.css.constants.CSSName;
 import org.xhtmlrenderer.css.constants.IdentValue;
@@ -45,7 +45,7 @@ public class SizePropertyBuilder extends AbstractPropertyBuilder {
             
             if (value.getCssValueType() == CSSValue.CSS_INHERIT) {
                 return checkInheritAll(ALL, values, origin, important, inheritAllowed);
-            } else if (value.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT) {
+            } else if (value.getPrimitiveType() == CSSPrimitiveValueExtension.CSS_IDENT) {
                 PageSize pageSize = PageSize.getPageSize(value.getStringValue());
                 if (pageSize != null) {
                     result.add(new PropertyDeclaration(
@@ -116,8 +116,8 @@ public class SizePropertyBuilder extends AbstractPropertyBuilder {
                         CSSName.FS_PAGE_HEIGHT, value2, important, origin));
                 
                 return result;
-            } else if (value1.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT &&
-                            value2.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT) {
+            } else if (value1.getPrimitiveType() == CSSPrimitiveValueExtension.CSS_IDENT &&
+                            value2.getPrimitiveType() == CSSPrimitiveValueExtension.CSS_IDENT) {
                 if (value2.getStringValue().equals("landscape") || 
                         value2.getStringValue().equals("portrait")) {
                     PropertyValue temp = value1;

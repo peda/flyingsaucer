@@ -75,6 +75,7 @@ public class ITextFSFontMetrics implements FSFontMetrics {
     public void setUnderlineThickness(float underlineThickness) {
         _underlineThickness = underlineThickness;
     }
-    
+
+    public float getCapHeight() { return 0f; }
 
 }

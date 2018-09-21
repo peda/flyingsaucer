@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.w3c.dom.css.CSSValue;
 import org.xhtmlrenderer.css.constants.CSSName;
 import org.xhtmlrenderer.css.parser.CSSParseException;
@@ -46,7 +46,7 @@ public abstract class CounterPropertyBuilder extends AbstractPropertyBuilder {
             
             if (value.getCssValueType() == CSSValue.CSS_INHERIT) {
                 return Collections.singletonList(new PropertyDeclaration(cssName, value, important, origin));
-            } else if (value.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT) {
+            } else if (value.getPrimitiveType() == CSSPrimitiveValueExtension.CSS_IDENT) {
                 if (value.getCssText().equals("none")) {
                     return Collections.singletonList(new PropertyDeclaration(cssName, value, important, origin));
                 } else {
@@ -66,13 +66,13 @@ public abstract class CounterPropertyBuilder extends AbstractPropertyBuilder {
             for (int i = 0; i < values.size(); i++) {
                 PropertyValue value = (PropertyValue)values.get(i);
                 
-                if (value.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT) {
+                if (value.getPrimitiveType() == CSSPrimitiveValueExtension.CSS_IDENT) {
                     String name = value.getStringValue();
                     int cValue = getDefaultValue();
                     
                     if (i < values.size() - 1) {
                         PropertyValue next = (PropertyValue)values.get(i+1);
-                        if (next.getPrimitiveType() == CSSPrimitiveValue.CSS_NUMBER) {
+                        if (next.getPrimitiveType() == CSSPrimitiveValueExtension.CSS_NUMBER) {
                             checkNumberIsInteger(cssName, next);
                             
                             cValue = (int)next.getFloatValue();
@@ -91,10 +91,10 @@ public abstract class CounterPropertyBuilder extends AbstractPropertyBuilder {
         }
     }
     
-    private void checkNumberIsInteger(CSSName cssName, CSSPrimitiveValue value) {
-        if ((int)value.getFloatValue(CSSPrimitiveValue.CSS_NUMBER) !=
-                    Math.round(value.getFloatValue(CSSPrimitiveValue.CSS_NUMBER))) {
-            throw new CSSParseException("The value " + value.getFloatValue(CSSPrimitiveValue.CSS_NUMBER) + " in " + 
+    private void checkNumberIsInteger(CSSName cssName, CSSPrimitiveValueExtension value) {
+        if ((int)value.getFloatValue(CSSPrimitiveValueExtension.CSS_NUMBER) !=
+                    Math.round(value.getFloatValue(CSSPrimitiveValueExtension.CSS_NUMBER))) {
+            throw new CSSParseException("The value " + value.getFloatValue(CSSPrimitiveValueExtension.CSS_NUMBER) + " in " +
                     cssName + " must be an integer", -1);
         }
     }

@@ -21,7 +21,7 @@ package org.xhtmlrenderer.css.style.derived;
 
 import java.util.logging.Level;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.xhtmlrenderer.css.constants.CSSName;
 import org.xhtmlrenderer.css.constants.ValueConstants;
 import org.xhtmlrenderer.css.parser.PropertyValue;
@@ -88,8 +88,9 @@ public class LengthValue extends DerivedValue {
     }
     
     public boolean isDependentOnFontSize() {
-        return _lengthPrimitiveType == CSSPrimitiveValue.CSS_EXS ||
-                    _lengthPrimitiveType == CSSPrimitiveValue.CSS_EMS;
+        return _lengthPrimitiveType == CSSPrimitiveValueExtension.CSS_EXS ||
+                    _lengthPrimitiveType == CSSPrimitiveValueExtension.CSS_EHS ||
+                    _lengthPrimitiveType == CSSPrimitiveValueExtension.CSS_EMS;
     }
 
     public static float calcFloatProportionalValue(CalculatedStyle style,
@@ -107,25 +108,25 @@ public class LengthValue extends DerivedValue {
         // values we shouldn't be caching, unless we also check if the DPI is changed, which
         // would seem to obviate the advantage of caching anyway.
         switch (primitiveType) {
-            case CSSPrimitiveValue.CSS_PX:
+            case CSSPrimitiveValueExtension.CSS_PX:
                 absVal = relVal * ctx.getDotsPerPixel();
                 break;
-            case CSSPrimitiveValue.CSS_IN:
+            case CSSPrimitiveValueExtension.CSS_IN:
                 absVal = (((relVal * CM__PER__IN) * MM__PER__CM) / ctx.getMmPerDot());
                 break;
-            case CSSPrimitiveValue.CSS_CM:
+            case CSSPrimitiveValueExtension.CSS_CM:
                 absVal = ((relVal * MM__PER__CM) / ctx.getMmPerDot());
                 break;
-            case CSSPrimitiveValue.CSS_MM:
+            case CSSPrimitiveValueExtension.CSS_MM:
                 absVal = relVal / ctx.getMmPerDot();
                 break;
-            case CSSPrimitiveValue.CSS_PT:
+            case CSSPrimitiveValueExtension.CSS_PT:
                 absVal = (((relVal * PT__PER__IN) * CM__PER__IN) * MM__PER__CM) / ctx.getMmPerDot();
                 break;
-            case CSSPrimitiveValue.CSS_PC:
+            case CSSPrimitiveValueExtension.CSS_PC:
                 absVal = ((((relVal * PC__PER__PT) * PT__PER__IN) * CM__PER__IN) * MM__PER__CM) / ctx.getMmPerDot();
                 break;
-            case CSSPrimitiveValue.CSS_EMS:
+            case CSSPrimitiveValueExtension.CSS_EMS:
                 // EM is equal to font-size of element on which it is used
                 // The exception is when ?em? occurs in the value of
                 // the ?font-size? property itself, in which case it refers
@@ -140,7 +141,7 @@ public class LengthValue extends DerivedValue {
                 }
 
                 break;
-            case CSSPrimitiveValue.CSS_EXS:
+            case CSSPrimitiveValueExtension.CSS_EXS:
                 // To convert EMS to pixels, we need the height of the lowercase 'Xx' character in the current
                 // element...
                 // to the font size of the parent element (spec: 4.3.2)
@@ -155,7 +156,22 @@ public class LengthValue extends DerivedValue {
                 absVal = relVal * xHeight;
 
                 break;
-            case CSSPrimitiveValue.CSS_PERCENTAGE:
+            case CSSPrimitiveValueExtension.CSS_EHS:
+                // To convert EHS to pixels, we need the height of a capital character character in the current
+                // element...
+                // to the font size of the parent element (spec: 4.3.2)
+                float hHeight;
+                if (cssName == CSSName.FONT_SIZE) {
+                    FontSpecification parentFont = style.getParent().getFont(ctx);
+                    hHeight = ctx.getHHeight(parentFont);
+                } else {
+                    FontSpecification font = style.getFont(ctx);
+                    hHeight = ctx.getHHeight(font);
+                }
+                absVal = relVal * hHeight;
+
+                break;
+            case CSSPrimitiveValueExtension.CSS_PERCENTAGE:
                 // percentage depends on the property this value belongs to
                 if (cssName == CSSName.VERTICAL_ALIGN) {
                     baseValue = style.getParent().getLineHeight(ctx);
@@ -170,7 +186,7 @@ public class LengthValue extends DerivedValue {
                 absVal = (relVal / 100F) * baseValue;
 
                 break;
-            case CSSPrimitiveValue.CSS_NUMBER:
+            case CSSPrimitiveValueExtension.CSS_NUMBER:
                 absVal = relVal;
                 break;
             default:

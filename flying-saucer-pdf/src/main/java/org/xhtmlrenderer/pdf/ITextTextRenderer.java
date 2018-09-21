@@ -64,6 +64,8 @@ public class ITextTextRenderer implements TextRenderer {
         
         result.setUnderlineOffset(-descr.getUnderlinePosition() / 1000f * size);
         result.setUnderlineThickness(descr.getUnderlineThickness() / 1000f * size);
+
+        result.setCapHeight(bf.getFontDescriptor(BaseFont.CAPHEIGHT, size));
         
         return result;
     }

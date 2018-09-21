@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.xhtmlrenderer.css.constants.CSSName;
 import org.xhtmlrenderer.css.constants.IdentValue;
 import org.xhtmlrenderer.css.parser.PropertyValue;
@@ -68,7 +68,7 @@ public class CascadedStyle {
      * to the value of the <code>display</code> parameter.  
      */
     public static CascadedStyle createAnonymousStyle(IdentValue display) {
-        CSSPrimitiveValue val = new PropertyValue(display);
+        CSSPrimitiveValueExtension val = new PropertyValue(display);
         
         List props = Collections.singletonList(
                 new PropertyDeclaration(CSSName.DISPLAY, val, true, StylesheetInfo.USER));
@@ -112,7 +112,7 @@ public class CascadedStyle {
      */
     public static PropertyDeclaration createLayoutPropertyDeclaration(
             CSSName cssName, IdentValue display) {
-        CSSPrimitiveValue val = new PropertyValue(display);
+        CSSPrimitiveValueExtension val = new PropertyValue(display);
         // Urk... kind of ugly, but we really want this value to be used
         return new PropertyDeclaration(cssName, val, true, StylesheetInfo.USER);
     }

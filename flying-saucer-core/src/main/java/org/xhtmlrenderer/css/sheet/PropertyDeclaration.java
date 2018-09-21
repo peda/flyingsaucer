@@ -19,7 +19,7 @@
  */
 package org.xhtmlrenderer.css.sheet;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.xhtmlrenderer.css.constants.CSSName;
 import org.xhtmlrenderer.css.constants.IdentValue;
 import org.xhtmlrenderer.css.parser.PropertyValue;
@@ -49,7 +49,7 @@ public class PropertyDeclaration {
     /**
      * Description of the Field
      */
-    private org.w3c.dom.css.CSSPrimitiveValue cssPrimitiveValue;
+    private org.w3c.dom.css.CSSPrimitiveValueExtension cssPrimitiveValue;
 
     /**
      * Whether the property was declared as important! by the user.
@@ -118,7 +118,7 @@ public class PropertyDeclaration {
      *                StylesheetInfo#USER}, and {@link StylesheetInfo#AUTHOR}.
      */
     public PropertyDeclaration(CSSName cssName,
-                               org.w3c.dom.css.CSSPrimitiveValue value,
+                               org.w3c.dom.css.CSSPrimitiveValueExtension value,
                                boolean imp,
                                int orig) {
         this.propName = cssName.toString();
@@ -218,7 +218,7 @@ public class PropertyDeclaration {
      *
      * @return See desc.
      */
-    public org.w3c.dom.css.CSSPrimitiveValue getValue() {
+    public org.w3c.dom.css.CSSPrimitiveValueExtension getValue() {
         return cssPrimitiveValue;
     }
     

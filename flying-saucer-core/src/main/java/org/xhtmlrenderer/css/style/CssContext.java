@@ -2,6 +2,7 @@ package org.xhtmlrenderer.css.style;
 
 import org.xhtmlrenderer.context.StyleReference;
 import org.xhtmlrenderer.css.value.FontSpecification;
+import org.xhtmlrenderer.extend.FontContext;
 import org.xhtmlrenderer.render.FSFont;
 import org.xhtmlrenderer.render.FSFontMetrics;
 
@@ -20,6 +21,8 @@ public interface CssContext {
     float getFontSize2D(FontSpecification font);
 
     float getXHeight(FontSpecification parentFont);
+
+    float getHHeight(FontSpecification parentFont);
 
     FSFont getFont(FontSpecification font);
     

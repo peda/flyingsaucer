@@ -1,6 +1,6 @@
 package org.xhtmlrenderer.css.style;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.xhtmlrenderer.css.constants.CSSName;
 import org.xhtmlrenderer.css.parser.PropertyValue;
 import org.xhtmlrenderer.css.style.derived.LengthValue;
@@ -66,7 +66,7 @@ public class BorderRadiusCorner {
 	}
 	
 	private void setLeft(CSSName fromVal, CalculatedStyle style, PropertyValue value, CssContext ctx) {
-		if (value.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
+		if (value.getPrimitiveType() == CSSPrimitiveValueExtension.CSS_PERCENTAGE) {
             _leftPercent = true;
             _left = value.getFloatValue() / 100.0f;
         } else {
@@ -81,7 +81,7 @@ public class BorderRadiusCorner {
         }
 	}
 	private void setRight(CSSName fromVal, CalculatedStyle style, PropertyValue value, CssContext ctx) {
-		if (value.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
+		if (value.getPrimitiveType() == CSSPrimitiveValueExtension.CSS_PERCENTAGE) {
             float percent = value.getFloatValue() / 100.0f;
             _rightPercent = true;
             _right = value.getFloatValue() / 100.0f;

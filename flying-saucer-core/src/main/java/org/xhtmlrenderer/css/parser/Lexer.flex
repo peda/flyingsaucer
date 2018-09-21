@@ -116,6 +116,7 @@ Z             = z|\\0{0,4}(5a|7a)(\r\n|[ \t\r\n\f])?|\\z
 
 {num}{E}{M}		{return Token.TK_EMS;}
 {num}{E}{X}		{return Token.TK_EXS;}
+{num}{E}{H}		{return Token.TK_EHS;}
 {num}{P}{X}		{return Token.TK_PX;}
 {num}{C}{M}		{return Token.TK_CM;}
 {num}{M}{M}		{return Token.TK_MM;}

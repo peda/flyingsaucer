@@ -41,7 +41,7 @@ import javax.swing.Scrollable;
 import javax.swing.SwingConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.xhtmlrenderer.css.constants.CSSName;
 import org.xhtmlrenderer.css.constants.IdentValue;
 import org.xhtmlrenderer.css.parser.FSRGBColor;
@@ -416,12 +416,12 @@ public class RootPanel extends JPanel implements Scrollable, UserInterface, FSCa
     private void initFontFromComponent(BlockBox root) {
         if (isDefaultFontFromComponent()) {
             CalculatedStyle style = root.getStyle();
-            PropertyValue fontFamilyProp = new PropertyValue(CSSPrimitiveValue.CSS_STRING, getFont().getFamily(),
+            PropertyValue fontFamilyProp = new PropertyValue(CSSPrimitiveValueExtension.CSS_STRING, getFont().getFamily(),
                     getFont().getFamily());
             fontFamilyProp.setStringArrayValue(new String[] { fontFamilyProp.getStringValue() });
             style.setDefaultValue(CSSName.FONT_FAMILY, new StringValue(CSSName.FONT_FAMILY, fontFamilyProp));
             style.setDefaultValue(CSSName.FONT_SIZE, new LengthValue(style, CSSName.FONT_SIZE,
-                    new PropertyValue(CSSPrimitiveValue.CSS_PX, getFont().getSize(), Integer
+                    new PropertyValue(CSSPrimitiveValueExtension.CSS_PX, getFont().getSize(), Integer
                             .toString(getFont().getSize()))));
             Color c = getForeground();
             style.setDefaultValue(CSSName.COLOR, new ColorValue(CSSName.COLOR,

@@ -274,6 +274,10 @@ public class LayoutContext implements CssContext {
         return _sharedContext.getXHeight(getFontContext(), parentFont);
     }
 
+    public float getHHeight(FontSpecification parentFont) {
+        return _sharedContext.getHHeight(getFontContext(), parentFont);
+    }
+
     public FSFont getFont(FontSpecification font) {
         return _sharedContext.getFont(font);
     }

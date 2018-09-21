@@ -23,7 +23,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.xhtmlrenderer.context.StyleReference;
 import org.xhtmlrenderer.css.constants.ValueConstants;
 import org.xhtmlrenderer.layout.SharedContext;
@@ -344,7 +344,7 @@ class ElementPropertiesPanel extends JPanel {
             } else if (col == 2) {
                 PropertiesTableModel pmodel = (PropertiesTableModel) this.getModel();
                 Map.Entry me = (Map.Entry) pmodel._properties.entrySet().toArray()[row];
-                CSSPrimitiveValue cpv = (CSSPrimitiveValue) me.getValue();
+                CSSPrimitiveValueExtension cpv = (CSSPrimitiveValueExtension) me.getValue();
                 if (cpv.getCssText().startsWith("rgb")) {
                     label.setBackground(org.xhtmlrenderer.css.util.ConversionUtil.rgbToColor(cpv.getRGBColorValue()));
                 }
@@ -418,7 +418,7 @@ class ElementPropertiesPanel extends JPanel {
          */
         public Object getValueAt(int row, int col) {
             Map.Entry me = (Map.Entry) _properties.entrySet().toArray()[row];
-            CSSPrimitiveValue cpv = (CSSPrimitiveValue) me.getValue();
+            CSSPrimitiveValueExtension cpv = (CSSPrimitiveValueExtension) me.getValue();
 
             Object val = null;
             switch (col) {

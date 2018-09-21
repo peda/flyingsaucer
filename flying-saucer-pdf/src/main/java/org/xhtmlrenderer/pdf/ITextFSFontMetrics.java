@@ -28,6 +28,15 @@ public class ITextFSFontMetrics implements FSFontMetrics {
     private float _strikethroughThickness;
     private float _underlineOffset;
     private float _underlineThickness;
+    private float _capHeight;
+
+    public float getCapHeight() {
+        return _capHeight;
+    }
+
+    public void setCapHeight(float capHeight) {
+        this._capHeight = capHeight;
+    }
     
     public float getAscent() {
         return _ascent;

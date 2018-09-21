@@ -60,4 +60,6 @@ public class LineMetricsAdapter implements FSFontMetrics {
     public float getUnderlineThickness() {
         return _lineMetrics.getUnderlineThickness();
     }
+
+    public float getCapHeight() { return 0f; }
 }

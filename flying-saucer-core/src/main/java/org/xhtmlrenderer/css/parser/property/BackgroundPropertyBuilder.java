@@ -22,7 +22,7 @@ package org.xhtmlrenderer.css.parser.property;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSPrimitiveValueExtension;
 import org.xhtmlrenderer.css.constants.CSSName;
 import org.xhtmlrenderer.css.constants.IdentValue;
 import org.xhtmlrenderer.css.parser.CSSParseException;
@@ -40,9 +40,9 @@ public class BackgroundPropertyBuilder extends AbstractPropertyBuilder {
     private boolean isAppliesToBackgroundPosition(PropertyValue value) {
         short type = value.getPrimitiveType();
         
-        if (isLength(value) || type == CSSPrimitiveValue.CSS_PERCENTAGE) {
+        if (isLength(value) || type == CSSPrimitiveValueExtension.CSS_PERCENTAGE) {
             return true;
-        } else if (type != CSSPrimitiveValue.CSS_IDENT) {
+        } else if (type != CSSPrimitiveValueExtension.CSS_IDENT) {
             return false;
         } else {
             IdentValue ident = IdentValue.valueOf(value.getStringValue());
@@ -70,7 +70,7 @@ public class BackgroundPropertyBuilder extends AbstractPropertyBuilder {
             
             boolean processingBackgroundPosition = false;
             short type = value.getPrimitiveType();
-            if (type == CSSPrimitiveValue.CSS_IDENT) {
+            if (type == CSSPrimitiveValueExtension.CSS_IDENT) {
                 FSRGBColor color = Conversions.getColor(value.getStringValue());
                 if (color != null) {
                     if (backgroundColor != null) {
@@ -125,14 +125,14 @@ public class BackgroundPropertyBuilder extends AbstractPropertyBuilder {
                 if (PrimitivePropertyBuilders.BACKGROUND_POSITIONS.get(ident.FS_ID)) {
                     processingBackgroundPosition = true;
                 }
-            } else if (type == CSSPrimitiveValue.CSS_RGBCOLOR) {
+            } else if (type == CSSPrimitiveValueExtension.CSS_RGBCOLOR) {
                 if (backgroundColor != null) {
                     throw new CSSParseException("A background-color value cannot be set twice", -1);
                 }
                 
                 backgroundColor = new PropertyDeclaration(
                         CSSName.BACKGROUND_COLOR, value, important, origin);
-            } else if (type == CSSPrimitiveValue.CSS_URI) {
+            } else if (type == CSSPrimitiveValueExtension.CSS_URI) {
                 if (backgroundImage != null) {
                     throw new CSSParseException("A background-image value cannot be set twice", -1);
                 }
@@ -141,7 +141,7 @@ public class BackgroundPropertyBuilder extends AbstractPropertyBuilder {
                         CSSName.BACKGROUND_IMAGE, value, important, origin);
             }
             
-            if (processingBackgroundPosition || isLength(value) || type == CSSPrimitiveValue.CSS_PERCENTAGE) {
+            if (processingBackgroundPosition || isLength(value) || type == CSSPrimitiveValueExtension.CSS_PERCENTAGE) {
                 if (backgroundPosition != null) {
                     throw new CSSParseException("A background-position value cannot be set twice", -1);
                 }
@@ -185,8 +185,8 @@ public class BackgroundPropertyBuilder extends AbstractPropertyBuilder {
         
         if (backgroundPosition == null) {
             List v = new ArrayList(2);
-            v.add(new PropertyValue(CSSPrimitiveValue.CSS_PERCENTAGE, 0.0f, "0%"));
-            v.add(new PropertyValue(CSSPrimitiveValue.CSS_PERCENTAGE, 0.0f, "0%"));
+            v.add(new PropertyValue(CSSPrimitiveValueExtension.CSS_PERCENTAGE, 0.0f, "0%"));
+            v.add(new PropertyValue(CSSPrimitiveValueExtension.CSS_PERCENTAGE, 0.0f, "0%"));
             backgroundPosition = new PropertyDeclaration(
                     CSSName.BACKGROUND_POSITION, new PropertyValue(v), important, origin);
         }
